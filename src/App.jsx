@@ -14,6 +14,8 @@ import {
   SingleProduct,
 } from "./Pages";
 
+import { ErrorElements } from "./Components";
+
 const router = createBrowserRouter([
   {
     path: "/",
@@ -23,6 +25,7 @@ const router = createBrowserRouter([
       {
         index: true,
         element: <Landing />,
+        errorElement: <ErrorElements />,
       },
       {
         path: "/about",

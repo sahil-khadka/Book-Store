@@ -4,10 +4,31 @@ import { useState, useRef, useEffect } from "react";
 import { BsCart4, BsMoonFill, BsSunFill } from "react-icons/bs";
 import NavLinks from "./NavLinks";
 
+const themes = {
+  winter: "winter",
+  dracula: "dracula",
+};
+
+const getThemeLocal = () => {
+  return localStorage.getItem("theme") || themes.winter;
+};
+
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
   const dropdownRef = useRef(null);
-  const [theme, setTheme] = useState(false);
+
+  //theme toggle
+  const [theme, setTheme] = useState(getThemeLocal);
+  const handleTheme = () => {
+    const { winter, dracula } = themes;
+    const newTheme = theme === winter ? dracula : winter;
+    setTheme(newTheme);
+  };
+  useEffect(() => {
+    document.documentElement.setAttribute("data-theme", theme);
+    localStorage.setItem("theme", theme);
+  }),
+    [theme];
 
   // Close dropdown when clicking outside
   useEffect(() => {
@@ -27,7 +48,7 @@ const Navbar = () => {
   }, [isOpen]);
 
   return (
-    <nav className="bg-lime-200 relative">
+    <nav className="bg-lime-200 relative ">
       <div className=" align-element  rounded-2xl text-black grid grid-cols-3 items-center">
         <div className=" justify-self-start ">
           <NavLink
@@ -63,12 +84,7 @@ const Navbar = () => {
         <div className=" justify-self-end absolute top-5 right-19 dark:bg-gray-800 transition-colors flex gap-4">
           <div className="ml-2 items-center flex">
             <label className="swap swap-rotate">
-              <input
-                type="checkbox"
-                onChange={() => {
-                  setTheme(!theme);
-                }}
-              />
+              <input type="checkbox" onChange={handleTheme} />
               <BsSunFill className="swap-on h-7 w-7" />
               <BsMoonFill className="swap-off h-7 w-7" />
             </label>

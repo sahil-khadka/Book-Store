@@ -8,7 +8,7 @@ const Login = () => {
         method="post"
         className=" w-96 p-8 bg-white rounded-lg flex flex-col gap-y-4 shadow-lg/30"
       >
-        <h4 className=" text-center text-3xl font-bold">Login</h4>
+        <h4 className=" text-center text-3xl font-bold text-black">Login</h4>
         <FormInput
           type="email"
           lable="Email"
@@ -30,7 +30,7 @@ const Login = () => {
         >
           Guest User
         </button>
-        <p className="text-center">
+        <p className="text-center text-black">
           Not a Member yet?
           <Link
             to="/register"

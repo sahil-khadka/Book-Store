@@ -1,8 +1,8 @@
 import { Link } from "react-router-dom";
 const Header = () => {
   return (
-    <header className="bg-neutral-700">
-      <div className=" align-element flex justify-center sm:justify-end px-4 ">
+    <header className="bg-neutral">
+      <div className=" flex justify-center sm:justify-end px-4 ">
         <div className="flex gap-x-6  justify-center items-center">
           <Link
             to="/login"

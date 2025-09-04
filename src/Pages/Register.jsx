@@ -7,14 +7,16 @@ const Register = () => {
         method="post"
         className=" w-96 p-8 bg-white rounded-lg flex flex-col gap-y-4 shadow-lg/30"
       >
-        <h4 className="text-4xl text-center font-semibold">Register</h4>
+        <h4 className="text-4xl text-center font-semibold text-black">
+          Register
+        </h4>
         <FormInput type="text" lable="Username" />
         <FormInput type="email" lable="Email" />
         <FormInput type="password" lable="Password" />
 
         <SubmitBtn text="REGISTER" />
 
-        <p className="text-center">
+        <p className="text-center text-black">
           Already a Member?
           <Link to="/login" className="text-purple-600 hover:text-red-400">
             Login
