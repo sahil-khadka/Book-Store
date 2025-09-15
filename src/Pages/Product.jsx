@@ -3,6 +3,9 @@ import { Link, useLocation, useNavigate } from "react-router-dom";
 import { customFetch } from "../utils";
 import { useDispatch } from "react-redux";
 import { addToCart } from "../features/cartSlice";
+// Add these imports for toast
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const THEMES = { winter: "winter", dracula: "dracula" };
 const BOOKS_PER_PAGE = 6;
@@ -102,7 +105,16 @@ const Product = () => {
       book.saleInfo?.retailPrice?.amount ||
       parseFloat(generateFixedPrice(book.id));
     dispatch(addToCart({ ...book, calculatedPrice: priceAmount }));
-    alert("Book added to cart!");
+    // Replace alert with toast
+    toast.success("Book added to cart!", {
+      position: "top-right",
+      autoClose: 2000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: false,
+      draggable: true,
+      progress: undefined,
+    });
   };
 
   const displayedBooks = useMemo(
@@ -125,9 +137,7 @@ const Product = () => {
   if (error) return <div className="text-red-500">{error}</div>;
 
   return (
-    <div className={`min-h-screen ${classes.bg} py-8 pt-20`}>
-      {" "}
-      {/* Added pt-20 for navbar space */}
+    <div className={`min-h-screen ${classes.bg} py-8 px-19 pt-20 rounded-3xl`}>
       <div className="mb-8 flex justify-center">
         <div className="relative w-80 flex">
           <input
@@ -267,6 +277,8 @@ const Product = () => {
           &gt;
         </button>
       </div>
+      {/* Add ToastContainer here with theme support */}
+      <ToastContainer theme={theme === THEMES.dracula ? "dark" : "light"} />
     </div>
   );
 };

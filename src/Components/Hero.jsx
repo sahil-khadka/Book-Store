@@ -4,6 +4,7 @@ import slider2 from "../assets/slider2.webp";
 import slider3 from "../assets/slider3.webp";
 import slider4 from "../assets/slider4.webp";
 import slider5 from "../assets/slider5.webp";
+import image1 from "../assets/image.png";
 import { Link } from "react-router-dom";
 import FeaturedBook from "../Components/FeaturedBook";
 
@@ -20,6 +21,9 @@ const Hero = () => {
           <h1 className="text-6xl font-bold tracking-wider h-30">
             Welcome to Book Store
           </h1>
+          {/* <div>
+            <img src={image1} alt="" />
+          </div> */}
           <div className="w-full my-8">
             <hr className="border-t-2 border-gray-300 w-full" />
           </div>
