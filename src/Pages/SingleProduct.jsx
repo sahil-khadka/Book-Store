@@ -127,7 +127,7 @@ const SingleProduct = () => {
             </p>
             <button
               onClick={handleAddToCart}
-              className="bg-yellow-500 text-white px-6 py-3 rounded hover:bg-yellow-600 transition duration-300"
+              className="bg-yellow-500 text-white px-6 py-3 rounded hover:bg-yellow-600 transition duration-300 hover:cursor-pointer"
             >
               Add to Cart
             </button>

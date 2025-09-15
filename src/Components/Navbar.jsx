@@ -56,7 +56,7 @@ const Navbar = () => {
         <div className="justify-self-start">
           <NavLink
             to="/"
-            className="bg-base-200 text-base-content flex items-center justify-center font-bold w-18 lg:flex text-3xl mt-3 mb-3 rounded-lg px-5 py-3 hover:bg-base-300 transition-all"
+            className="bg-base-200 text-base-content flex items-center justify-center font-bold w-18 lg:flex text-3xl mt-3 mb-3 rounded-lg px-5 py-3 hover:bg-gray-400 transition-all"
           >
             BK
           </NavLink>
@@ -83,7 +83,7 @@ const Navbar = () => {
             <NavLinks isDropdown={false} />
           </ul>
         </div>
-        <div className="justify-self-end absolute top-5 right-19 bg-base-100 transition-colors flex gap-4">
+        <div className="justify-self-end absolute top-5 right-19  transition-colors flex gap-4">
           <div className="ml-2 items-center flex">
             <label className="swap swap-rotate">
               <input type="checkbox" onChange={handleTheme} />

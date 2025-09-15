@@ -65,16 +65,17 @@ const Hero = () => {
       <div>
         <h1 className="text-4xl mt-25">Featured Products</h1>
       </div>
-      <div className="w-full my-5">
-        <hr className="border-t-2 border-gray-300 w-full" />
-      </div>
+
       <div className="w-full my-5">
         <hr className="border-t-2 border-gray-300 w-full" />
       </div>
       {/* Featured Books */}
       <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-10">
         {FeaturedBook.map((book) => (
-          <div className="bg-gray-100 rounded-lg p-4 shadow-md" key={book.id}>
+          <div
+            className="bg-base-200 rounded-lg p-4 shadow-md hover:shadow-lg transition-shadow"
+            key={book.id}
+          >
             <img
               src={book.image}
               alt={book.title}

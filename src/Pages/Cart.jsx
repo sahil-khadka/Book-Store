@@ -1,5 +1,7 @@
-import React, { useState, useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
+import { useSelector, useDispatch } from "react-redux";
+import { removeItem, updateQuantity } from "../features/cartSlice";
 
 const themes = {
   winter: "winter",
@@ -11,38 +13,26 @@ const getThemeLocal = () => {
 };
 
 const Cart = () => {
-  const [cartItems, setCartItems] = useState([]);
+  const cartItems = useSelector((state) => state.cart.items);
   const [theme, setTheme] = useState(getThemeLocal());
+  const dispatch = useDispatch();
   const navigate = useNavigate();
-
-  useEffect(() => {
-    // Load cart from localStorage
-    const storedCart = JSON.parse(localStorage.getItem("cart")) || [];
-    setCartItems(storedCart);
-  }, []);
 
   useEffect(() => {
     const handleThemeChange = () => {
       setTheme(getThemeLocal());
     };
-    // Listen for custom theme change event from Navbar for instant updates
     window.addEventListener("themeChange", handleThemeChange);
     return () => window.removeEventListener("themeChange", handleThemeChange);
   }, []);
 
-  const updateQuantity = (id, newQuantity) => {
+  const handleUpdateQuantity = (id, newQuantity) => {
     if (newQuantity <= 0) return;
-    const updatedCart = cartItems.map((item) =>
-      item.id === id ? { ...item, quantity: newQuantity } : item
-    );
-    setCartItems(updatedCart);
-    localStorage.setItem("cart", JSON.stringify(updatedCart));
+    dispatch(updateQuantity({ id, quantity: newQuantity }));
   };
 
-  const removeItem = (id) => {
-    const updatedCart = cartItems.filter((item) => item.id !== id);
-    setCartItems(updatedCart);
-    localStorage.setItem("cart", JSON.stringify(updatedCart));
+  const handleRemoveItem = (id) => {
+    dispatch(removeItem(id));
   };
 
   const getTotalPrice = () => {
@@ -50,7 +40,7 @@ const Cart = () => {
       .reduce((total, item) => {
         const price = Math.abs(
           item.calculatedPrice || item.saleInfo?.retailPrice?.amount || 20
-        ); // Ensure positive price
+        );
         return total + price * item.quantity;
       }, 0)
       .toFixed(2);
@@ -116,7 +106,7 @@ const Cart = () => {
             const info = item.volumeInfo;
             const price = Math.abs(
               item.calculatedPrice || item.saleInfo?.retailPrice?.amount || 20
-            ); // Ensure positive price
+            );
             return (
               <div
                 key={item.id}
@@ -145,21 +135,25 @@ const Cart = () => {
                 <div className="flex items-center space-x-4">
                   <div className="flex items-center space-x-2">
                     <button
-                      onClick={() => updateQuantity(item.id, item.quantity - 1)}
+                      onClick={() =>
+                        handleUpdateQuantity(item.id, item.quantity - 1)
+                      }
                       className={`${buttonBgClass} px-2 py-1 rounded`}
                     >
                       -
                     </button>
                     <span className={`px-3 ${textClass}`}>{item.quantity}</span>
                     <button
-                      onClick={() => updateQuantity(item.id, item.quantity + 1)}
+                      onClick={() =>
+                        handleUpdateQuantity(item.id, item.quantity + 1)
+                      }
                       className={`${buttonBgClass} px-2 py-1 rounded`}
                     >
                       +
                     </button>
                   </div>
                   <button
-                    onClick={() => removeItem(item.id)}
+                    onClick={() => handleRemoveItem(item.id)}
                     className={`${removeButtonClass} text-white px-4 py-2 rounded`}
                   >
                     Remove

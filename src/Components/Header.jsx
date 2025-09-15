@@ -6,7 +6,7 @@ const Header = () => {
       style={{ backgroundColor: "rgba(57,50,128,1)" }}
     >
       <div className=" flex justify-center sm:justify-end px-4 ">
-        <div className="flex gap-x-6  justify-center items-center">
+        <div className="flex gap-x-5  justify-center items-center mr-10">
           <Link
             to="/login"
             className="text-white font-bold hover:text-lime-500 text-xs sm:text-sm"
