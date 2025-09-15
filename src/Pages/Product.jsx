@@ -1,20 +1,58 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useMemo } from "react";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { customFetch } from "../utils";
+import { useDispatch } from "react-redux";
+import { addToCart } from "../features/cartSlice";
+
+const THEMES = { winter: "winter", dracula: "dracula" };
+const BOOKS_PER_PAGE = 6;
+const TOTAL_PAGES = 5;
+
+const getThemeLocal = () => localStorage.getItem("theme") || THEMES.winter;
+const getThemeClasses = (isDark) => ({
+  bg: isDark ? "bg-gray-900" : "bg-gray-100",
+  card: isDark ? "bg-gray-800" : "bg-white",
+  text: isDark ? "text-white" : "text-black",
+  textGray: isDark ? "text-gray-300" : "text-gray-600",
+  textGray800: isDark ? "text-gray-200" : "text-gray-800",
+  button: isDark
+    ? "bg-gray-700 hover:bg-gray-600"
+    : "bg-gray-200 hover:bg-gray-300",
+  pagination: isDark ? "bg-gray-700 text-white" : "bg-gray-200 text-gray-700",
+  paginationActive: isDark
+    ? "bg-blue-700 text-white"
+    : "bg-blue-600 text-white",
+  searchBg: isDark ? "bg-gray-700 border-gray-600" : "bg-white border-gray-300",
+  searchText: isDark
+    ? "text-white placeholder-gray-400"
+    : "text-black placeholder-gray-500",
+});
+const generateFixedPrice = (id) => {
+  let hash = 0;
+  for (let i = 0; i < id.length; i++)
+    hash = ((hash << 5) - hash + id.charCodeAt(i)) & 0xffffffff;
+  return ((hash % 100) + 20).toFixed(2);
+};
 
 const Product = () => {
   const [books, setBooks] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
-  const [search, setSearch] = useState(""); // search input state
-  const [query, setQuery] = useState("all"); // actual query to fetch
+  const [search, setSearch] = useState("");
+  const [query, setQuery] = useState("all");
+  const [currentPage, setCurrentPage] = useState(1);
+  const [theme, setTheme] = useState(getThemeLocal());
+  const location = useLocation();
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   useEffect(() => {
     const fetchBooks = async () => {
       setLoading(true);
       setError("");
       try {
-        const { data } = await customFetch(`?q=${query}`);
-        setBooks(data.items || []);
+        const { data } = await customFetch(`?q=${query}&maxResults=40`);
+        setBooks([...(data.items || [])].sort(() => Math.random() - 0.5));
       } catch (err) {
         setError("Failed to fetch books.");
       } finally {
@@ -24,65 +62,210 @@ const Product = () => {
     fetchBooks();
   }, [query]);
 
-  const handleSearch = (e) => {
-    e.preventDefault();
-    setQuery(search.trim() === "" ? "all" : search.trim());
+  useEffect(() => {
+    window.scrollTo({ top: 0, behavior: "smooth" });
+    if (location.state?.currentPage) setCurrentPage(location.state.currentPage);
+    if (location.state?.query) {
+      setQuery(location.state.query);
+      setSearch(location.state.query);
+    }
+    const observer = new MutationObserver((mutations) => {
+      mutations.forEach((mutation) => {
+        if (
+          mutation.type === "attributes" &&
+          mutation.attributeName === "data-theme"
+        ) {
+          setTheme(
+            document.documentElement.getAttribute("data-theme") || THEMES.winter
+          );
+        }
+      });
+    });
+    observer.observe(document.documentElement, {
+      attributes: true,
+      attributeFilter: ["data-theme"],
+    });
+    return () => observer.disconnect();
+  }, [location.state]);
+
+  const handleSearchChange = (e) => {
+    setSearch(e.target.value);
   };
 
-  if (loading) return <div className="text-2xl">Loading...</div>;
+  const handleSearchSubmit = () => {
+    setQuery(search.trim() || "all");
+    setCurrentPage(1);
+  };
+
+  const handleAddToCart = (book) => {
+    const priceAmount =
+      book.saleInfo?.retailPrice?.amount ||
+      parseFloat(generateFixedPrice(book.id));
+    dispatch(addToCart({ ...book, calculatedPrice: priceAmount }));
+    alert("Book added to cart!");
+  };
+
+  const displayedBooks = useMemo(
+    () =>
+      books.slice(
+        (currentPage - 1) * BOOKS_PER_PAGE,
+        currentPage * BOOKS_PER_PAGE
+      ),
+    [books, currentPage]
+  );
+
+  const classes = getThemeClasses(theme === THEMES.dracula);
+
+  if (loading)
+    return (
+      <div className="flex justify-center items-center min-h-screen">
+        <div className="animate-spin rounded-full h-32 w-32 border-b-4 border-blue-600"></div>
+      </div>
+    );
   if (error) return <div className="text-red-500">{error}</div>;
 
   return (
-    <div>
-      <form onSubmit={handleSearch} className="mb-8 flex justify-center">
-        <input
-          type="text"
-          value={search}
-          onChange={(e) => setSearch(e.target.value)}
-          placeholder="Search by book title..."
-          className="border border-gray-300 rounded-l px-4 py-2 w-64 focus:outline-none"
-        />
-        <button
-          type="submit"
-          className="bg-blue-600 text-white px-4 py-2 rounded-r hover:bg-blue-700"
-        >
-          Search
-        </button>
-      </form>
+    <div className={`min-h-screen ${classes.bg} py-8 pt-20`}>
+      {" "}
+      {/* Added pt-20 for navbar space */}
+      <div className="mb-8 flex justify-center">
+        <div className="relative w-80 flex">
+          <input
+            type="text"
+            value={search}
+            onChange={handleSearchChange}
+            placeholder="Search by book title..."
+            className={`w-full pl-10 pr-4 py-3 border rounded-l-full focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent shadow-md ${classes.searchBg} ${classes.searchText}`}
+          />
+          <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+            <svg
+              className="w-5 h-5 text-gray-400"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth={2}
+                d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"
+              />
+            </svg>
+          </div>
+          <button
+            onClick={handleSearchSubmit}
+            className="px-6 py-3 bg-blue-600 text-white rounded-r-full hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500"
+          >
+            Search
+          </button>
+        </div>
+      </div>
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
-        {books.map((book) => {
+        {displayedBooks.map((book) => {
           const info = book.volumeInfo;
+          const priceAmount =
+            book.saleInfo?.retailPrice?.amount ||
+            parseFloat(generateFixedPrice(book.id));
+          const price = `$${Math.abs(priceAmount)}`;
           return (
             <div
               key={book.id}
-              className="bg-white rounded-lg shadow-lg p-4 flex flex-col"
+              className={`${classes.card} rounded-lg shadow-lg p-4 flex flex-col relative hover:shadow-xl hover:scale-105 transition duration-100`}
             >
               <img
                 src={info.imageLinks?.thumbnail}
                 alt={info.title}
                 className="h-48 w-auto mx-auto mb-4 rounded"
               />
-              <h2 className="text-xl font-bold mb-2">{info.title}</h2>
-              <p className="text-gray-700 mb-1">
-                <span className="font-semibold">Author:</span>{" "}
-                {info.authors ? info.authors.join(", ") : "Unknown"}
-              </p>
-              <p className="text-gray-600 text-sm mb-2 line-clamp-3">
-                {info.description
-                  ? info.description.slice(0, 120) + "..."
-                  : "No description available."}
-              </p>
-              <a
-                href={info.infoLink}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="mt-auto text-blue-600 hover:underline"
+              <h2
+                className={`text-2xl font-bold mb-2 text-center ${classes.text}`}
               >
-                More Info
-              </a>
+                {info.title}
+              </h2>
+              <p className={`text-lg ${classes.textGray} mb-1 text-center`}>
+                {info.authors?.join(", ") || "Unknown"}
+              </p>
+              {info.averageRating && (
+                <p className={`${classes.textGray} mb-2`}>
+                  <span className="font-semibold">Rating:</span>{" "}
+                  {info.averageRating}/5{" "}
+                  {Array.from({ length: 5 }, (_, i) => (
+                    <span
+                      key={i}
+                      className={
+                        i < Math.floor(info.averageRating)
+                          ? "text-yellow-500"
+                          : "text-gray-300"
+                      }
+                    >
+                      ★
+                    </span>
+                  ))}
+                  {info.ratingsCount && ` (${info.ratingsCount} ratings)`}
+                </p>
+              )}
+              <div className="mt-auto">
+                <p
+                  className={`text-2xl ${classes.textGray800} font-semibold text-center mb-2`}
+                >
+                  {price}
+                </p>
+                <div className="flex justify-between items-center">
+                  <Link
+                    to={`/singleproduct/${book.id}`}
+                    state={{ book, currentPage, query }}
+                    className="text-blue-600 hover:underline"
+                  >
+                    More Info
+                  </Link>
+                  <button
+                    onClick={() => handleAddToCart(book)}
+                    className="bg-yellow-500 text-white px-4 py-2 rounded hover:bg-yellow-600 transition duration-300"
+                  >
+                    Add to Cart
+                  </button>
+                </div>
+              </div>
             </div>
           );
         })}
+      </div>
+      <div className="flex justify-center mt-8">
+        <button
+          onClick={() => setCurrentPage(currentPage - 1)}
+          disabled={currentPage === 1}
+          className={`mx-2 px-4 py-2 rounded font-bold text-2xl ${
+            currentPage === 1
+              ? "bg-gray-300 text-gray-500 cursor-not-allowed"
+              : classes.button
+          }`}
+        >
+          &lt;
+        </button>
+        {Array.from({ length: TOTAL_PAGES }, (_, i) => (
+          <button
+            key={i}
+            onClick={() => setCurrentPage(i + 1)}
+            className={`mx-2 px-4 py-2 rounded ${
+              currentPage === i + 1
+                ? classes.paginationActive
+                : classes.pagination
+            }`}
+          >
+            {i + 1}
+          </button>
+        ))}
+        <button
+          onClick={() => setCurrentPage(currentPage + 1)}
+          disabled={currentPage === TOTAL_PAGES}
+          className={`mx-2 px-4 py-2 rounded font-bold text-2xl ${
+            currentPage === TOTAL_PAGES
+              ? "bg-gray-300 text-gray-500 cursor-not-allowed"
+              : classes.button
+          }`}
+        >
+          &gt;
+        </button>
       </div>
     </div>
   );

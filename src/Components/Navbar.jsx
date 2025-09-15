@@ -3,6 +3,7 @@ import { FaBarsStaggered } from "react-icons/fa6";
 import { useState, useRef, useEffect } from "react";
 import { BsCart4, BsMoonFill, BsSunFill } from "react-icons/bs";
 import NavLinks from "./NavLinks";
+import { useSelector } from "react-redux";
 
 const themes = {
   winter: "winter",
@@ -16,9 +17,12 @@ const getThemeLocal = () => {
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
   const dropdownRef = useRef(null);
+  const cartCount = useSelector((state) =>
+    state.cart.items.reduce((sum, item) => sum + item.quantity, 0)
+  );
 
-  //theme toggle
-  const [theme, setTheme] = useState(getThemeLocal);
+  // Theme toggle
+  const [theme, setTheme] = useState(getThemeLocal());
   const handleTheme = () => {
     const { winter, dracula } = themes;
     const newTheme = theme === winter ? dracula : winter;
@@ -27,8 +31,7 @@ const Navbar = () => {
   useEffect(() => {
     document.documentElement.setAttribute("data-theme", theme);
     localStorage.setItem("theme", theme);
-  }),
-    [theme];
+  }, [theme]);
 
   // Close dropdown when clicking outside
   useEffect(() => {
@@ -62,7 +65,6 @@ const Navbar = () => {
           </button>
 
           {/* Dropdown menu */}
-
           {isOpen && (
             <div className="bg-gray-200">
               <ul
@@ -93,7 +95,7 @@ const Navbar = () => {
             <div className="relative inline-block">
               <BsCart4 className="h-10 w-9  p-1 rounded border-1 " />
               <span className="absolute -top-2 -right-2 bg-blue-600 text-white text-xs font-semibold w-5 h-5 flex items-center justify-center rounded-full">
-                8
+                {cartCount}
               </span>
             </div>
           </NavLink>

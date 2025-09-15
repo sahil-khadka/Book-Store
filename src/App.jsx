@@ -36,8 +36,9 @@ const router = createBrowserRouter([
         element: <Product />,
       },
       {
-        path: "/products/:id",
+        path: "/singleproduct/:id", // Updated path to match the Link in Product.jsx
         element: <SingleProduct />,
+        errorElement: <ErrorElements />, // Added errorElement for this route
       },
       {
         path: "/cart",
@@ -68,4 +69,5 @@ const router = createBrowserRouter([
 const App = () => {
   return <RouterProvider router={router} />;
 };
+
 export default App;

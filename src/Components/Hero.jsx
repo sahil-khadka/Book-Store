@@ -70,18 +70,15 @@ const Hero = () => {
       {/* Featured Books */}
       <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-10">
         {FeaturedBook.map((book) => (
-          <div
-            key={book.id}
-            className="bg-white rounded-lg shadow-md p-4 flex flex-col items-center"
-          >
+          <div className="bg-gray-100 rounded-lg p-4 shadow-md" key={book.id}>
             <img
               src={book.image}
               alt={book.title}
-              className="h-48 w-32 object-cover mb-4 rounded"
+              className="w-full h-90 object-cover rounded mb-4"
             />
-            <h2 className="text-xl font-semibold">{book.title}</h2>
+            <h3 className="text-lg font-semibold mb-2">{book.title}</h3>
             <p className="text-gray-600 mb-2">{book.author}</p>
-            <span className="font-bold text-lg mb-2">{book.price}</span>
+            <p className="text-blue-600 font-bold">{book.price}</p>
           </div>
         ))}
       </div>
