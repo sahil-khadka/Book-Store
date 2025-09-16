@@ -23,7 +23,7 @@ const Hero = () => {
         className="absolute top-0 left-0 w-full h-[47rem] md:h-[47rem] lg:h-[47rem] object-cover -z-10"
         style={{ opacity: 0.7 }}
       />
-      <div className="grid grid-cols-1 lg:grid-cols-2 w-full max-w-7xl mx-auto gap-8 lg:gap-24 items-center relative px-4 md:px-8">
+      <div className="grid grid-cols-1 lg:grid-cols-2 w-full max-w-7xl mx-auto gap-8 lg:gap-24 items-center relative px-4 md:px-8 ">
         {/* Info */}
         <div>
           <h1 className="text-4xl md:text-5xl lg:text-6xl font-extrabold tracking-wider h-30 bg-gradient-to-r from-cyan-200 to-violet-500 bg-clip-text text-transparent">
@@ -54,10 +54,7 @@ const Hero = () => {
             </Link>
           </div>
         </div>
-        <img
-          src={image1}
-          className="w-40 md:w-60 lg:w-80 absolute right-0 top-0"
-        />
+        <img src={image1} className="w-40 absolute right-0 top-0" />
         <img
           src={image2}
           className="w-20 md:w-40 lg:w-80 h-auto absolute right-24 top-12"
