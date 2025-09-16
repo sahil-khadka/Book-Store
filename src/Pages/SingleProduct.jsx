@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
-import { Link, useLocation, useNavigate } from "react-router-dom";
+import { useParams, useLocation } from "react-router-dom";
+import { useSelector } from "react-redux";
 
 const THEMES = { winter: "winter", dracula: "dracula" };
 const getThemeLocal = () => localStorage.getItem("theme") || THEMES.winter;
@@ -24,21 +25,20 @@ const generateFixedPrice = (id) => {
 };
 
 const SingleProduct = () => {
+  const { id } = useParams();
   const location = useLocation();
-  const navigate = useNavigate();
   const [theme, setTheme] = useState(getThemeLocal());
+  const cartItems = useSelector((state) => state.cart.items);
 
-  const { book, currentPage, query } = location.state || {};
+  // Get book from router state (Product page) or from cart (Cart page)
+  const book = location.state?.book || cartItems.find((item) => item.id === id);
+
   const info = book?.volumeInfo;
   const price =
     book?.saleInfo?.retailPrice?.amount ||
-    parseFloat(generateFixedPrice(book?.id));
+    parseFloat(generateFixedPrice(book?.id || id));
 
   useEffect(() => {
-    if (!book) {
-      navigate("/product");
-      return;
-    }
     const observer = new MutationObserver((mutations) => {
       mutations.forEach((mutation) => {
         if (
@@ -56,43 +56,22 @@ const SingleProduct = () => {
       attributeFilter: ["data-theme"],
     });
     return () => observer.disconnect();
-  }, [book, navigate]);
+  }, []);
 
-  const handleAddToCart = () => {
-    if (!book) return;
-    const cart = JSON.parse(localStorage.getItem("cart")) || [];
-    const existing = cart.find((item) => item.id === book.id);
-    if (existing) existing.quantity += 1;
-    else {
-      // Store the calculated price
-      cart.push({ ...book, calculatedPrice: price, quantity: 1 });
-    }
-    localStorage.setItem("cart", JSON.stringify(cart));
-    alert("Book added to cart!");
-  };
-
-  if (!book)
-    return <div className="text-red-500">Book not found. Redirecting...</div>;
+  if (!book) return <div className="text-red-500">Book not found.</div>;
 
   const classes = getThemeClasses(theme === THEMES.dracula);
 
   return (
-    <div className={`min-h-screen ${classes.bg} py-8`}>
+    <div className={`${classes.bg} pt-8 pb-20 rounded-3xl`}>
       <div className="max-w-4xl mx-auto">
-        <Link
-          to="/product"
-          state={{ currentPage, query }}
-          className="text-blue-600 hover:underline mb-4 inline-block"
-        >
-          ← Back to Products
-        </Link>
         <div
           className={`${classes.card} rounded-lg shadow-lg p-8 flex flex-col md:flex-row gap-8`}
         >
           <img
             src={info.imageLinks?.thumbnail}
             alt={info.title}
-            className="w-48 h-auto mx-auto md:mx-0 rounded"
+            className=" w-80 rounded border-2 "
           />
           <div className="flex-1">
             <h1 className={`text-3xl font-bold mb-4 ${classes.text}`}>
@@ -125,10 +104,7 @@ const SingleProduct = () => {
             <p className={`${classes.textGray} mb-6`}>
               {info.description || "No description available."}
             </p>
-            <button
-              onClick={handleAddToCart}
-              className="bg-yellow-500 text-white px-6 py-3 rounded hover:bg-yellow-600 transition duration-300 hover:cursor-pointer"
-            >
+            <button className="bg-yellow-500 text-white px-6 py-3 rounded hover:bg-yellow-600 transition duration-300 hover:cursor-pointer ">
               Add to Cart
             </button>
           </div>

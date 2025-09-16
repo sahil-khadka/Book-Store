@@ -3,9 +3,10 @@ import { Link, useLocation, useNavigate } from "react-router-dom";
 import { customFetch } from "../utils";
 import { useDispatch } from "react-redux";
 import { addToCart } from "../features/cartSlice";
-// Add these imports for toast
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import notimg from "../assets/not-found.jpeg";
+import pro from "../assets/pro.png";
 
 const THEMES = { winter: "winter", dracula: "dracula" };
 const BOOKS_PER_PAGE = 6;
@@ -93,6 +94,7 @@ const Product = () => {
 
   const handleSearchChange = (e) => {
     setSearch(e.target.value);
+    setCurrentPage(1);
   };
 
   const handleSearchSubmit = () => {
@@ -105,7 +107,6 @@ const Product = () => {
       book.saleInfo?.retailPrice?.amount ||
       parseFloat(generateFixedPrice(book.id));
     dispatch(addToCart({ ...book, calculatedPrice: priceAmount }));
-    // Replace alert with toast
     toast.success("Book added to cart!", {
       position: "top-right",
       autoClose: 2000,
@@ -117,13 +118,24 @@ const Product = () => {
     });
   };
 
+  // Filter books by title as user types
+  const filteredBooks = useMemo(() => {
+    if (!search.trim()) return books;
+    return books.filter((book) =>
+      book.volumeInfo?.title
+        ?.toLowerCase()
+        .includes(search.trim().toLowerCase())
+    );
+  }, [books, search]);
+
+  // Use filteredBooks for pagination
   const displayedBooks = useMemo(
     () =>
-      books.slice(
+      filteredBooks.slice(
         (currentPage - 1) * BOOKS_PER_PAGE,
         currentPage * BOOKS_PER_PAGE
       ),
-    [books, currentPage]
+    [filteredBooks, currentPage]
   );
 
   const classes = getThemeClasses(theme === THEMES.dracula);
@@ -137,149 +149,184 @@ const Product = () => {
   if (error) return <div className="text-red-500">{error}</div>;
 
   return (
-    <div className={`min-h-screen ${classes.bg} py-8 px-19 pt-20 rounded-3xl`}>
-      <div className="mb-8 flex justify-center">
-        <div className="relative w-80 flex">
-          <input
-            type="text"
-            value={search}
-            onChange={handleSearchChange}
-            placeholder="Search by book title..."
-            className={`w-full pl-10 pr-4 py-3 border rounded-l-full focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent shadow-md ${classes.searchBg} ${classes.searchText}`}
-          />
-          <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-            <svg
-              className="w-5 h-5 text-gray-400"
-              fill="none"
-              stroke="currentColor"
-              viewBox="0 0 24 24"
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth={2}
-                d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"
-              />
-            </svg>
-          </div>
-          <button
-            onClick={handleSearchSubmit}
-            className="px-6 py-3 bg-blue-600 text-white rounded-r-full hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500"
-          >
-            Search
-          </button>
-        </div>
-      </div>
-      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
-        {displayedBooks.map((book) => {
-          const info = book.volumeInfo;
-          const priceAmount =
-            book.saleInfo?.retailPrice?.amount ||
-            parseFloat(generateFixedPrice(book.id));
-          const price = `$${Math.abs(priceAmount)}`;
-          return (
-            <div
-              key={book.id}
-              className={`${classes.card} rounded-lg shadow-lg p-4 flex flex-col relative hover:shadow-xl hover:scale-105 transition duration-100`}
-            >
-              <img
-                src={info.imageLinks?.thumbnail}
-                alt={info.title}
-                className="h-48 w-auto mx-auto mb-4 rounded"
-              />
-              <h2
-                className={`text-2xl font-bold mb-2 text-center ${classes.text}`}
+    <>
+      <img
+        src={pro}
+        alt="Books background"
+        className="fixed top-0 left-0   object-cover -z-10 min-h-screen w-full "
+        style={{ opacity: 0.6 }}
+      />
+      <div
+        className={`min-h-screen ${classes.bg} py-8 px-19 pt-20 rounded-3xl relative`}
+      >
+        <div className="mb-8 flex justify-center">
+          <div className="relative w-80 flex">
+            <input
+              type="text"
+              value={search}
+              onChange={handleSearchChange}
+              onKeyDown={(e) => {
+                if (e.key === "Enter") handleSearchSubmit();
+              }}
+              placeholder="Search by book title..."
+              className={`w-full pl-10 pr-4 py-3 border rounded-l-full focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent shadow-md ${classes.searchBg} ${classes.searchText}`}
+            />
+            <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+              <svg
+                className="w-5 h-5 text-gray-400"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
               >
-                {info.title}
-              </h2>
-              <p className={`text-lg ${classes.textGray} mb-1 text-center`}>
-                {info.authors?.join(", ") || "Unknown"}
-              </p>
-              {info.averageRating && (
-                <p className={`${classes.textGray} mb-2`}>
-                  <span className="font-semibold">Rating:</span>{" "}
-                  {info.averageRating}/5{" "}
-                  {Array.from({ length: 5 }, (_, i) => (
-                    <span
-                      key={i}
-                      className={
-                        i < Math.floor(info.averageRating)
-                          ? "text-yellow-500"
-                          : "text-gray-300"
-                      }
-                    >
-                      ★
-                    </span>
-                  ))}
-                  {info.ratingsCount && ` (${info.ratingsCount} ratings)`}
-                </p>
-              )}
-              <div className="mt-auto">
-                <p
-                  className={`text-2xl ${classes.textGray800} font-semibold text-center mb-2`}
-                >
-                  {price}
-                </p>
-                <div className="flex justify-between items-center">
-                  <Link
-                    to={`/singleproduct/${book.id}`}
-                    state={{ book, currentPage, query }}
-                    className="text-blue-600 hover:underline"
-                  >
-                    More Info
-                  </Link>
-                  <button
-                    onClick={() => handleAddToCart(book)}
-                    className="bg-yellow-500 text-white px-4 py-2 rounded hover:bg-yellow-600 transition duration-300"
-                  >
-                    Add to Cart
-                  </button>
-                </div>
-              </div>
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth={2}
+                  d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"
+                />
+              </svg>
             </div>
-          );
-        })}
+            <button
+              onClick={handleSearchSubmit}
+              className="px-6 py-3 bg-blue-600 text-white rounded-r-full hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 "
+            >
+              Search
+            </button>
+          </div>
+        </div>
+        {!loading && displayedBooks.length === 0 && (
+          <div className="text-center font-bold text-3xl text-red-500  mt-50 ">
+            <img
+              src={notimg}
+              alt="Not found"
+              className="mx-auto w-auto h-150 absolute left-0 right-0 rounded-2xl"
+            />
+          </div>
+        )}
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
+          {displayedBooks.map((book) => {
+            const info = book.volumeInfo;
+            const priceAmount =
+              book.saleInfo?.retailPrice?.amount ||
+              parseFloat(generateFixedPrice(book.id));
+            const price = `$${Math.abs(priceAmount)}`;
+            return (
+              <Link
+                to={`/singleproduct/${book.id}`}
+                state={{ book, currentPage, query }}
+                key={book.id}
+                className={`${classes.card} rounded-lg shadow-lg p-4 flex flex-col relative hover:shadow-xl hover:scale-105 transition duration-100`}
+                style={{ textDecoration: "none" }}
+              >
+                <img
+                  src={info.imageLinks?.thumbnail}
+                  alt={info.title}
+                  className="h-48 w-auto mx-auto mb-4 rounded"
+                />
+                <h2
+                  className={`text-2xl font-bold mb-2 text-center ${classes.text}`}
+                >
+                  {info.title}
+                </h2>
+                <p className={`text-lg ${classes.textGray} mb-1 text-center`}>
+                  {info.authors?.join(", ") || "Unknown"}
+                </p>
+                {info.averageRating && (
+                  <p className={`${classes.textGray} mb-2`}>
+                    <span className="font-semibold">Rating:</span>{" "}
+                    {info.averageRating}/5{" "}
+                    {Array.from({ length: 5 }, (_, i) => (
+                      <span
+                        key={i}
+                        className={
+                          i < Math.floor(info.averageRating)
+                            ? "text-yellow-500"
+                            : "text-gray-300"
+                        }
+                      >
+                        ★
+                      </span>
+                    ))}
+                    {info.ratingsCount && ` (${info.ratingsCount} ratings)`}
+                  </p>
+                )}
+                <div className="mt-auto">
+                  <p
+                    className={`text-2xl ${classes.textGray800} font-semibold text-center mb-2`}
+                  >
+                    {price}
+                  </p>
+                  <div className="flex justify-between items-center">
+                    <span className="text-blue-600 hover:underline">
+                      More Info
+                    </span>
+                    <button
+                      onClick={(e) => {
+                        e.preventDefault();
+                        e.stopPropagation();
+                        handleAddToCart(book);
+                      }}
+                      className="bg-yellow-500 text-white px-4 py-2 rounded hover:bg-yellow-300 hover:text-black transition duration-300 hover:cursor-pointer"
+                    >
+                      Add to Cart
+                    </button>
+                  </div>
+                </div>
+              </Link>
+            );
+          })}
+        </div>
+        {!loading && displayedBooks.length > 0 && (
+          <div className="flex justify-center mt-8">
+            <button
+              onClick={() => setCurrentPage(currentPage - 1)}
+              disabled={currentPage === 1}
+              className={`mx-2 px-4 py-2 rounded font-bold text-2xl ${
+                currentPage === 1
+                  ? "bg-gray-300 text-gray-500 cursor-not-allowed"
+                  : classes.button
+              }`}
+            >
+              &lt;
+            </button>
+            {Array.from(
+              { length: Math.ceil(filteredBooks.length / BOOKS_PER_PAGE) || 1 },
+              (_, i) => (
+                <button
+                  key={i}
+                  onClick={() => setCurrentPage(i + 1)}
+                  className={`mx-2 px-4 py-2 rounded ${
+                    currentPage === i + 1
+                      ? classes.paginationActive
+                      : classes.pagination
+                  }`}
+                >
+                  {i + 1}
+                </button>
+              )
+            )}
+            <button
+              onClick={() => setCurrentPage(currentPage + 1)}
+              disabled={
+                currentPage ===
+                  Math.ceil(filteredBooks.length / BOOKS_PER_PAGE) ||
+                filteredBooks.length === 0
+              }
+              className={`mx-2 px-4 py-2 rounded font-bold text-2xl ${
+                currentPage ===
+                  Math.ceil(filteredBooks.length / BOOKS_PER_PAGE) ||
+                filteredBooks.length === 0
+                  ? "bg-gray-300 text-gray-500 cursor-not-allowed"
+                  : classes.button
+              }`}
+            >
+              &gt;
+            </button>
+          </div>
+        )}
+        <ToastContainer theme={theme === THEMES.dracula ? "dark" : "light"} />
       </div>
-      <div className="flex justify-center mt-8">
-        <button
-          onClick={() => setCurrentPage(currentPage - 1)}
-          disabled={currentPage === 1}
-          className={`mx-2 px-4 py-2 rounded font-bold text-2xl ${
-            currentPage === 1
-              ? "bg-gray-300 text-gray-500 cursor-not-allowed"
-              : classes.button
-          }`}
-        >
-          &lt;
-        </button>
-        {Array.from({ length: TOTAL_PAGES }, (_, i) => (
-          <button
-            key={i}
-            onClick={() => setCurrentPage(i + 1)}
-            className={`mx-2 px-4 py-2 rounded ${
-              currentPage === i + 1
-                ? classes.paginationActive
-                : classes.pagination
-            }`}
-          >
-            {i + 1}
-          </button>
-        ))}
-        <button
-          onClick={() => setCurrentPage(currentPage + 1)}
-          disabled={currentPage === TOTAL_PAGES}
-          className={`mx-2 px-4 py-2 rounded font-bold text-2xl ${
-            currentPage === TOTAL_PAGES
-              ? "bg-gray-300 text-gray-500 cursor-not-allowed"
-              : classes.button
-          }`}
-        >
-          &gt;
-        </button>
-      </div>
-      {/* Add ToastContainer here with theme support */}
-      <ToastContainer theme={theme === THEMES.dracula ? "dark" : "light"} />
-    </div>
+    </>
   );
 };
 

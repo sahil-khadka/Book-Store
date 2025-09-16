@@ -2,7 +2,7 @@ import { Link } from "react-router-dom";
 const Header = () => {
   return (
     <header
-      className="headerBG w-full h-10"
+      className="headerBG w-full h-10  pt-2"
       style={{ backgroundColor: "rgba(57,50,128,1)" }}
     >
       <div className=" flex justify-center sm:justify-end px-4 ">

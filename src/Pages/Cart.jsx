@@ -22,9 +22,29 @@ const Cart = () => {
     const handleThemeChange = () => {
       setTheme(getThemeLocal());
     };
+
     window.addEventListener("themeChange", handleThemeChange);
-    return () => window.removeEventListener("themeChange", handleThemeChange);
-  }, []);
+
+    const handleStorage = (e) => {
+      if (e.key === "theme") {
+        setTheme(getThemeLocal());
+      }
+    };
+    window.addEventListener("storage", handleStorage);
+
+    const interval = setInterval(() => {
+      const currentTheme = getThemeLocal();
+      if (currentTheme !== theme) {
+        setTheme(currentTheme);
+      }
+    });
+
+    return () => {
+      window.removeEventListener("themeChange", handleThemeChange);
+      window.removeEventListener("storage", handleStorage);
+      clearInterval(interval);
+    };
+  }, [theme]);
 
   const handleUpdateQuantity = (id, newQuantity) => {
     if (newQuantity <= 0) return;
@@ -47,9 +67,7 @@ const Cart = () => {
   };
 
   const handleCheckout = () => {
-    alert(
-      "Checkout functionality not implemented yet. Total: $" + getTotalPrice()
-    );
+    navigate("/checkout");
     // Navigate to checkout page if you have one: navigate("/checkout");
   };
 
@@ -66,11 +84,14 @@ const Cart = () => {
     ? "bg-red-700 hover:bg-red-800"
     : "bg-red-500 hover:bg-red-600";
   const checkoutButtonClass = isDark
-    ? "bg-green-800 hover:bg-green-900"
-    : "bg-green-600 hover:bg-green-700";
+    ? "bg-green-800 hover:bg-green-300"
+    : "bg-green-600 hover:bg-green-300";
   const continueButtonClass = isDark
-    ? "bg-gray-700 hover:bg-gray-800"
-    : "bg-gray-500 hover:bg-gray-600";
+    ? "bg-gray-700 hover:bg-gray-300"
+    : "bg-gray-500 hover:bg-gray-300";
+  const gradientClass = isDark
+    ? "bg-gradient-to-r from-purple-400 via-pink-400 to-blue-400"
+    : "bg-gradient-to-r from-pink-500 via-yellow-500 to-blue-500";
 
   if (cartItems.length === 0) {
     return (
@@ -98,10 +119,24 @@ const Cart = () => {
   return (
     <div className={`min-h-screen ${bgClass} py-19 px-19 rounded-3xl`}>
       <div
-        className={`max-w-6xl mx-auto ${cardBgClass} rounded-lg shadow-lg p-8`}
+        className={`max-w-6xl mx-auto ${cardBgClass} rounded-lg shadow-lg p-8 ${
+          isDark ? "border border-gray-700" : ""
+        }`}
       >
-        <h1 className={`text-3xl font-bold mb-6 ${textClass}`}>Your Cart</h1>
-        <div className="space-y-4">
+        <h1
+          className={`text-5xl font-extrabold ${gradientClass} bg-clip-text text-transparent inline-block`}
+        >
+          Your Cart
+        </h1>
+        <div className="w-full my-8">
+          <hr
+            className={`border-t-2 ${
+              isDark ? "border-gray-700" : "border-gray-300"
+            } w-full`}
+          />
+        </div>
+        {/* Scrollable container for cart items */}
+        <div className="space-y-4 max-h-150 overflow-y-auto pr-5">
           {cartItems.map((item) => {
             const info = item.volumeInfo;
             const price = Math.abs(
@@ -110,18 +145,24 @@ const Cart = () => {
             return (
               <div
                 key={item.id}
-                className={`flex items-center justify-between border-b pb-4 ${
+                className={`flex items-center justify-between border-b pb-5 ${
                   isDark ? "border-gray-700" : "border-gray-200"
                 }`}
               >
-                <div className="flex items-center space-x-4">
+                <Link
+                  to={`/singleproduct/${item.id}`}
+                  className="flex items-center space-x-4 group"
+                  style={{ flex: 1, textDecoration: "none" }}
+                >
                   <img
                     src={info.imageLinks?.thumbnail}
                     alt={info.title}
-                    className="w-16 h-20 object-cover rounded"
+                    className="w-50 h-50 object-cover rounded group-hover:scale-105 transition-transform duration-200"
                   />
                   <div>
-                    <h2 className={`text-lg font-semibold ${textClass}`}>
+                    <h2
+                      className={`text-lg font-semibold ${textClass} group-hover:underline`}
+                    >
                       {info.title}
                     </h2>
                     <p className={textGrayClass}>
@@ -131,14 +172,14 @@ const Cart = () => {
                       ${price.toFixed(2)}
                     </p>
                   </div>
-                </div>
+                </Link>
                 <div className="flex items-center space-x-4">
                   <div className="flex items-center space-x-2">
                     <button
                       onClick={() =>
                         handleUpdateQuantity(item.id, item.quantity - 1)
                       }
-                      className={`${buttonBgClass} px-2 py-1 rounded`}
+                      className={`${buttonBgClass} px-2 py-1 rounded hover:cursor-pointer`}
                     >
                       -
                     </button>
@@ -147,14 +188,14 @@ const Cart = () => {
                       onClick={() =>
                         handleUpdateQuantity(item.id, item.quantity + 1)
                       }
-                      className={`${buttonBgClass} px-2 py-1 rounded`}
+                      className={`${buttonBgClass} px-2 py-1 rounded hover:cursor-pointer`}
                     >
                       +
                     </button>
                   </div>
                   <button
                     onClick={() => handleRemoveItem(item.id)}
-                    className={`${removeButtonClass} text-white px-4 py-2 rounded`}
+                    className={`${removeButtonClass} text-white px-4 py-2 rounded hover:cursor-pointer`}
                   >
                     Remove
                   </button>
@@ -176,7 +217,7 @@ const Cart = () => {
             </Link>
             <button
               onClick={handleCheckout}
-              className={`${checkoutButtonClass} text-white px-6 py-2 rounded transition duration-300`}
+              className={`${checkoutButtonClass} text-white px-6 py-2 rounded transition duration-300 hover:`}
             >
               Checkout
             </button>

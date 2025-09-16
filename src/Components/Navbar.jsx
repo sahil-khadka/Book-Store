@@ -56,7 +56,7 @@ const Navbar = () => {
         <div className="justify-self-start">
           <NavLink
             to="/"
-            className="bg-base-200 text-base-content flex items-center justify-center font-bold w-18 lg:flex text-3xl mt-3 mb-3 rounded-lg px-5 py-3 hover:bg-gray-400 transition-all"
+            className="  flex items-center justify-center w-18 lg:flex text-3xl mt-3 mb-3 rounded-lg px-5 py-3 font-extrabold bg-gradient-to-b from-Amber-500 to-red-500 bg-clip-text text-transparent  hover:bg-gray-800 transition-all"
           >
             BK
           </NavLink>
