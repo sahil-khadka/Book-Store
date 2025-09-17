@@ -80,58 +80,70 @@ const SingleProduct = () => {
   };
 
   return (
-    <div className={`${classes.bg} pt-8 pb-20 rounded-3xl`}>
-      <div className="max-w-4xl mx-auto">
-        <div
-          className={`${classes.card} rounded-lg shadow-lg p-8 flex flex-col md:flex-row gap-8`}
-        >
-          <img
-            src={info.imageLinks?.thumbnail}
-            alt={info.title}
-            className=" w-80 rounded border-2 "
-          />
-          <div className="flex-1">
-            <h1 className={`text-3xl font-bold mb-4 ${classes.text}`}>
-              {info.title}
-            </h1>
-            <p className={`text-lg ${classes.textGray} mb-2`}>
-              By: {info.authors?.join(", ") || "Unknown"}
-            </p>
-            {info.averageRating && (
-              <p className={`${classes.textGray} mb-2`}>
-                Rating: {info.averageRating}/5{" "}
-                {Array.from({ length: 5 }, (_, i) => (
-                  <span
-                    key={i}
-                    className={
-                      i < Math.floor(info.averageRating)
-                        ? "text-yellow-500"
-                        : "text-gray-300"
-                    }
-                  >
-                    ★
-                  </span>
-                ))}
-                {info.ratingsCount && ` (${info.ratingsCount} ratings)`}
+    <>
+      <img
+        src={
+          "https://images.squarespace-cdn.com/content/v1/5ab959d189c17212dbefbac3/cd6bfa7c-cd9b-4127-b779-379e292eb2ad/Liberty+Bay+Photo+Update.jpg"
+        }
+        alt="Books background"
+        className="fixed top-0 left-0 object-cover -z-10 min-h-screen w-full"
+        style={{ opacity: 0.7 }}
+      />
+      <div className={`${classes.bg} pt-8 pb-20 rounded-3xl`}>
+        <div className="max-w-4xl mx-auto">
+          <div
+            className={`${classes.card} rounded-lg shadow-lg p-8 flex flex-col md:flex-row gap-8`}
+          >
+            <img
+              src={info.imageLinks?.thumbnail}
+              alt={info.title}
+              className=" w-80 rounded border-2 "
+            />
+            <div className="flex-1">
+              <h1 className={`text-3xl font-bold mb-4 ${classes.text}`}>
+                {info.title}
+              </h1>
+              <p className={`text-lg ${classes.textGray} mb-2`}>
+                By: {info.authors?.join(", ") || "Unknown"}
               </p>
-            )}
-            <p className={`text-xl ${classes.textGray800} font-semibold mb-4`}>
-              Price: ${Math.abs(price).toFixed(2)}
-            </p>
-            <p className={`${classes.textGray} mb-6`}>
-              {info.description || "No description available."}
-            </p>
-            <button
-              className="bg-yellow-500 text-white px-6 py-3 rounded hover:bg-yellow-600 transition duration-300 hover:cursor-pointer "
-              onClick={handleAddToCart}
-              disabled={isInCart}
-            >
-              {isInCart ? "Added to Cart" : "Add to Cart"}
-            </button>
+              {info.averageRating && (
+                <p className={`${classes.textGray} mb-2`}>
+                  Rating: {info.averageRating}/5{" "}
+                  {Array.from({ length: 5 }, (_, i) => (
+                    <span
+                      key={i}
+                      className={
+                        i < Math.floor(info.averageRating)
+                          ? "text-yellow-500"
+                          : "text-gray-300"
+                      }
+                    >
+                      ★
+                    </span>
+                  ))}
+                  {info.ratingsCount && ` (${info.ratingsCount} ratings)`}
+                </p>
+              )}
+              <p
+                className={`text-xl ${classes.textGray800} font-semibold mb-4`}
+              >
+                Price: ${Math.abs(price).toFixed(2)}
+              </p>
+              <p className={`${classes.textGray} mb-6`}>
+                {info.description || "No description available."}
+              </p>
+              <button
+                className="bg-yellow-500 text-white px-6 py-3 rounded hover:bg-yellow-600 transition duration-300 hover:cursor-pointer "
+                onClick={handleAddToCart}
+                disabled={isInCart}
+              >
+                {isInCart ? "Added to Cart" : "Add to Cart"}
+              </button>
+            </div>
           </div>
         </div>
       </div>
-    </div>
+    </>
   );
 };
 

@@ -151,7 +151,7 @@ const Product = () => {
         src={pro}
         alt="Books background"
         className="fixed top-0 left-0 object-cover -z-10 min-h-screen w-full"
-        style={{ opacity: 0.8 }}
+        style={{ opacity: 0.7 }}
       />
       <div
         className={`min-h-screen ${classes.bg} py-6 sm:py-8 md:py-12 lg:py-19 px-4 sm:px-6 md:px-8 lg:px-19 pt-20 rounded-3xl relative`}

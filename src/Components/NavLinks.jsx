@@ -21,11 +21,11 @@ const NavLinks = ({ isDropdown, setIsOpen }) => {
               end
               onClick={isDropdown ? () => setIsOpen(false) : undefined}
               className={({ isActive }) =>
-                `capitalize px-5 py-4 rounded transition-all flex 
+                `capitalize px-5 py-4 rounded transition-all flex text-white
                 ${
                   isActive
-                    ? "bg-pink-600 text-white font-bold"
-                    : "hover:bg-gray-400"
+                    ? "bg-pink-400 text-black font-extrabold hover:text-black hover:shadow-lg "
+                    : "hover:shadow-lg hover:shadow-black hover:text-black"
                 }
                 ${
                   !isDropdown && text === "Cart"

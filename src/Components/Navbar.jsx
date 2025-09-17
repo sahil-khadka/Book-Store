@@ -51,12 +51,12 @@ const Navbar = () => {
   }, [isOpen]);
 
   return (
-    <nav className="bg-base-200 relative">
+    <nav className=" relative">
       <div className="align-element rounded-2xl text-base-content grid grid-cols-3 items-center">
         <div className="justify-self-start">
           <NavLink
             to="/"
-            className="  flex items-center justify-center w-18 lg:flex text-3xl mt-3 mb-3 rounded-lg px-5 py-3 font-extrabold bg-gradient-to-b from-Amber-500 to-red-500 bg-clip-text text-transparent  hover:bg-gray-800 transition-all"
+            className="  flex items-center justify-center w-18 lg:flex text-5xl mt-3 mb-3 rounded-lg px-5 py-3 font-extrabold bg-gradient-to-r from-rose-500 to-green-300 bg-clip-text text-transparent hover:text-red-300 transition-all"
           >
             BK
           </NavLink>
@@ -87,8 +87,8 @@ const Navbar = () => {
           <div className="ml-2 items-center flex">
             <label className="swap swap-rotate">
               <input type="checkbox" onChange={handleTheme} />
-              <BsSunFill className="swap-on h-7 w-7" />
-              <BsMoonFill className="swap-off h-7 w-7" />
+              <BsSunFill className="swap-on h-7 w-7 text-amber-300" />
+              <BsMoonFill className="swap-off h-7 w-7 text-black" />
             </label>
           </div>
           <NavLink to="/cart" className="">
