@@ -10,7 +10,6 @@ import pro from "../assets/pro.png";
 
 const THEMES = { winter: "winter", dracula: "dracula" };
 const BOOKS_PER_PAGE = 6;
-const TOTAL_PAGES = 5;
 
 const getThemeLocal = () => localStorage.getItem("theme") || THEMES.winter;
 const getThemeClasses = (isDark) => ({
@@ -106,7 +105,7 @@ const Product = () => {
     const priceAmount =
       book.saleInfo?.retailPrice?.amount ||
       parseFloat(generateFixedPrice(book.id));
-    dispatch(addToCart({ ...book, calculatedPrice: priceAmount }));
+    dispatch(addItem({ ...book, calculatedPrice: priceAmount }));
     toast.success("Book added to cart!", {
       position: "top-right",
       autoClose: 2000,
@@ -118,7 +117,6 @@ const Product = () => {
     });
   };
 
-  // Filter books by title as user types
   const filteredBooks = useMemo(() => {
     if (!search.trim()) return books;
     return books.filter((book) =>
@@ -128,7 +126,6 @@ const Product = () => {
     );
   }, [books, search]);
 
-  // Use filteredBooks for pagination
   const displayedBooks = useMemo(
     () =>
       filteredBooks.slice(
@@ -153,14 +150,14 @@ const Product = () => {
       <img
         src={pro}
         alt="Books background"
-        className="fixed top-0 left-0   object-cover -z-10 min-h-screen w-full "
+        className="fixed top-0 left-0 object-cover -z-10 min-h-screen w-full"
         style={{ opacity: 0.8 }}
       />
       <div
-        className={`min-h-screen ${classes.bg} py-8 px-19 pt-20 rounded-3xl relative`}
+        className={`min-h-screen ${classes.bg} py-6 sm:py-8 md:py-12 lg:py-19 px-4 sm:px-6 md:px-8 lg:px-19 pt-20 rounded-3xl relative`}
       >
         <div className="mb-8 flex justify-center">
-          <div className="relative w-80 flex">
+          <div className="relative w-full max-w-md flex">
             <input
               type="text"
               value={search}
@@ -195,15 +192,16 @@ const Product = () => {
           </div>
         </div>
         {!loading && displayedBooks.length === 0 && (
-          <div className="text-center font-bold text-3xl text-red-500  mt-50 ">
+          <div className="text-center font-bold text-3xl text-red-500 mt-10">
             <img
               src={notimg}
               alt="Not found"
-              className="mx-auto w-auto h-150 absolute left-0 right-0 rounded-2xl"
+              className="mx-auto w-full max-w-xs h-auto rounded-2xl"
             />
           </div>
         )}
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
+        {/* Responsive grid: 2 columns on mobile, 3 on medium and up */}
+        <div className="grid grid-cols-2 md:grid-cols-3 gap-6 ">
           {displayedBooks.map((book) => {
             const info = book.volumeInfo;
             const priceAmount =
@@ -215,13 +213,13 @@ const Product = () => {
                 to={`/singleproduct/${book.id}`}
                 state={{ book, currentPage, query }}
                 key={book.id}
-                className={`${classes.card} rounded-lg shadow-lg p-4 flex flex-col relative hover:shadow-xl hover:scale-105 transition duration-100`}
+                className={`${classes.card} rounded-lg shadow-lg p-4 flex flex-col relative hover:shadow-xl hover:scale-105 transition duration-100 border`}
                 style={{ textDecoration: "none" }}
               >
                 <img
                   src={info.imageLinks?.thumbnail}
                   alt={info.title}
-                  className="h-48 w-auto mx-auto mb-4 rounded"
+                  className="h-48 w-full max-w-xs mx-auto mb-4 rounded object-cover"
                 />
                 <h2
                   className={`text-2xl font-bold mb-2 text-center ${classes.text}`}
@@ -256,7 +254,7 @@ const Product = () => {
                   >
                     {price}
                   </p>
-                  <div className="flex justify-between items-center">
+                  <div className="flex flex-col sm:flex-row justify-between items-center gap-2">
                     <span className="text-blue-600 hover:underline">
                       More Info
                     </span>
@@ -266,7 +264,7 @@ const Product = () => {
                         e.stopPropagation();
                         handleAddToCart(book);
                       }}
-                      className="bg-yellow-500 text-white px-4 py-2 rounded hover:bg-yellow-300 hover:text-black transition duration-300 hover:cursor-pointer"
+                      className="bg-yellow-500 text-white px-4 py-2 rounded hover:bg-yellow-300 hover:text-black transition duration-300 hover:cursor-pointer w-full sm:w-auto"
                     >
                       Add to Cart
                     </button>
@@ -277,7 +275,7 @@ const Product = () => {
           })}
         </div>
         {!loading && displayedBooks.length > 0 && (
-          <div className="flex justify-center mt-8">
+          <div className="flex flex-wrap justify-center mt-8 gap-2">
             <button
               onClick={() => setCurrentPage(currentPage - 1)}
               disabled={currentPage === 1}

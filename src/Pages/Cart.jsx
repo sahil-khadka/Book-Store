@@ -99,9 +99,11 @@ const Cart = () => {
 
   if (cartItems.length === 0) {
     return (
-      <div className={`min-h-screen ${bgClass} py-8`}>
+      <div
+        className={`min-h-screen ${bgClass} py-6 sm:py-8 md:py-12 lg:py-19 px-4 sm:px-6 md:px-8 lg:px-19`}
+      >
         <div
-          className={`max-w-4xl mx-auto ${cardBgClass} rounded-lg shadow-lg p-8 text-center`}
+          className={`max-w-4xl w-full mx-auto ${cardBgClass} rounded-lg shadow-lg p-4 sm:p-6 md:p-8 text-center`}
         >
           <h1 className={`text-3xl font-bold mb-4 ${textClass}`}>
             Your Cart is Empty
@@ -121,9 +123,11 @@ const Cart = () => {
   }
 
   return (
-    <div className={`min-h-screen ${bgClass} py-19 px-19 rounded-3xl`}>
+    <div
+      className={`min-h-screen ${bgClass} py-6 sm:py-8 md:py-12 lg:py-19 px-4 sm:px-6 md:px-8 lg:px-19 rounded-3xl`}
+    >
       <div
-        className={`max-w-6xl mx-auto ${cardBgClass} rounded-lg shadow-lg p-8 ${
+        className={`max-w-6xl w-full mx-auto ${cardBgClass} rounded-lg shadow-lg p-4 sm:p-6 md:p-8 ${
           isDark ? "border border-gray-700" : ""
         }`}
       >
@@ -164,19 +168,19 @@ const Cart = () => {
             return (
               <div
                 key={item.id}
-                className={`flex items-center justify-between border-b pb-5 ${
+                className={`flex flex-col sm:flex-row items-center justify-between border-b pb-5 ${
                   isDark ? "border-gray-700" : "border-gray-200"
                 }`}
               >
                 <Link
                   to={`/singleproduct/${item.id}`}
-                  className="flex items-center space-x-4 group"
+                  className="flex items-center space-x-4 group w-full sm:w-auto"
                   style={{ flex: 1, textDecoration: "none" }}
                 >
                   <img
                     src={image}
                     alt={title}
-                    className="w-50 h-50 object-cover rounded group-hover:scale-105 transition-transform duration-200"
+                    className="w-24 h-24 sm:w-32 sm:h-40 object-cover rounded group-hover:scale-105 transition-transform duration-200"
                   />
                   <div>
                     <h2
@@ -190,7 +194,7 @@ const Cart = () => {
                     </p>
                   </div>
                 </Link>
-                <div className="flex items-center space-x-4">
+                <div className="flex items-center space-x-4 mt-4 sm:mt-0">
                   <div className="flex items-center space-x-2">
                     <button
                       onClick={() =>
@@ -221,8 +225,8 @@ const Cart = () => {
             );
           })}
         </div>
-        <div className="mt-8 flex justify-between items-center">
-          <h2 className={`text-2xl font-bold ${textClass}`}>
+        <div className="mt-8 flex flex-col sm:flex-row justify-between items-center">
+          <h2 className={`text-2xl font-bold ${textClass} mb-4 sm:mb-0`}>
             Total: ${getTotalPrice()}
           </h2>
           <div className="space-x-4">
