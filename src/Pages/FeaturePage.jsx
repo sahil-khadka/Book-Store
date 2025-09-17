@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
-import { useParams, useLocation } from "react-router-dom";
-import { useSelector, useDispatch } from "react-redux";
-import { addItem } from "../features/cartSlice"; // <-- import your action
+import { useParams } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import FeaturedBook from "../Components/FeaturedBook";
 
 const THEMES = { winter: "winter", dracula: "dracula" };
 const getThemeLocal = () => localStorage.getItem("theme") || THEMES.winter;
@@ -17,28 +17,13 @@ const getThemeClasses = (isDark) => ({
     : "bg-gray-200 hover:bg-gray-300",
 });
 
-const generateFixedPrice = (id) => {
-  let hash = 0;
-  for (let i = 0; i < id.length; i++) {
-    hash = ((hash << 5) - hash + id.charCodeAt(i)) & 0xffffffff;
-  }
-  return ((hash % 100) + 20).toFixed(2);
-};
-
-const SingleProduct = () => {
+const FeaturePage = () => {
   const { id } = useParams();
-  const location = useLocation();
-  const [theme, setTheme] = useState(getThemeLocal());
-  const cartItems = useSelector((state) => state.cart.items);
+  const book = FeaturedBook.find((b) => b.id === id);
   const dispatch = useDispatch();
+  const cartItems = useSelector((state) => state.cart.items);
 
-  // Get book from router state (Product page) or from cart (Cart page)
-  const book = location.state?.book || cartItems.find((item) => item.id === id);
-
-  const info = book?.volumeInfo;
-  const price =
-    book?.saleInfo?.retailPrice?.amount ||
-    parseFloat(generateFixedPrice(book?.id || id));
+  const [theme, setTheme] = useState(getThemeLocal());
 
   useEffect(() => {
     const observer = new MutationObserver((mutations) => {
@@ -69,13 +54,10 @@ const SingleProduct = () => {
 
   const handleAddToCart = () => {
     if (!isInCart) {
-      dispatch(
-        addItem({
-          ...book,
-          quantity: 1,
-          calculatedPrice: price,
-        })
-      );
+      dispatch({
+        type: "cart/addItem",
+        payload: { ...book, quantity: 1 }, // set initial quantity
+      });
     }
   };
 
@@ -86,43 +68,23 @@ const SingleProduct = () => {
           className={`${classes.card} rounded-lg shadow-lg p-8 flex flex-col md:flex-row gap-8`}
         >
           <img
-            src={info.imageLinks?.thumbnail}
-            alt={info.title}
-            className=" w-80 rounded border-2 "
+            src={book.image}
+            alt={book.title}
+            className="w-80 rounded border-2"
           />
           <div className="flex-1">
             <h1 className={`text-3xl font-bold mb-4 ${classes.text}`}>
-              {info.title}
+              {book.title}
             </h1>
             <p className={`text-lg ${classes.textGray} mb-2`}>
-              By: {info.authors?.join(", ") || "Unknown"}
+              By: {book.author}
             </p>
-            {info.averageRating && (
-              <p className={`${classes.textGray} mb-2`}>
-                Rating: {info.averageRating}/5{" "}
-                {Array.from({ length: 5 }, (_, i) => (
-                  <span
-                    key={i}
-                    className={
-                      i < Math.floor(info.averageRating)
-                        ? "text-yellow-500"
-                        : "text-gray-300"
-                    }
-                  >
-                    ★
-                  </span>
-                ))}
-                {info.ratingsCount && ` (${info.ratingsCount} ratings)`}
-              </p>
-            )}
             <p className={`text-xl ${classes.textGray800} font-semibold mb-4`}>
-              Price: ${Math.abs(price).toFixed(2)}
+              Price: {book.price}
             </p>
-            <p className={`${classes.textGray} mb-6`}>
-              {info.description || "No description available."}
-            </p>
+            <p className={`${classes.textGray} mb-6`}>{book.description}</p>
             <button
-              className="bg-yellow-500 text-white px-6 py-3 rounded hover:bg-yellow-600 transition duration-300 hover:cursor-pointer "
+              className="bg-yellow-500 text-white px-6 py-3 rounded hover:bg-yellow-600 transition duration-300 hover:cursor-pointer"
               onClick={handleAddToCart}
               disabled={isInCart}
             >
@@ -135,4 +97,4 @@ const SingleProduct = () => {
   );
 };
 
-export default SingleProduct;
+export default FeaturePage;

@@ -2,7 +2,7 @@ import React, { useEffect, useState, useMemo } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { customFetch } from "../utils";
 import { useDispatch } from "react-redux";
-import { addToCart } from "../features/cartSlice";
+import { addItem } from "../features/cartSlice";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import notimg from "../assets/not-found.jpeg";

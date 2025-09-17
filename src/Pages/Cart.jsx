@@ -59,7 +59,12 @@ const Cart = () => {
     return cartItems
       .reduce((total, item) => {
         const price = Math.abs(
-          item.calculatedPrice || item.saleInfo?.retailPrice?.amount || 20
+          item.calculatedPrice ||
+            item.saleInfo?.retailPrice?.amount ||
+            (typeof item.price === "string"
+              ? parseFloat(item.price.replace("$", ""))
+              : item.price) ||
+            20
         );
         return total + price * item.quantity;
       }, 0)
@@ -68,7 +73,6 @@ const Cart = () => {
 
   const handleCheckout = () => {
     navigate("/checkout");
-    // Navigate to checkout page if you have one: navigate("/checkout");
   };
 
   const isDark = theme === themes.dracula;
@@ -139,9 +143,24 @@ const Cart = () => {
         <div className="space-y-4 max-h-150 overflow-y-auto pr-5">
           {cartItems.map((item) => {
             const info = item.volumeInfo;
+            const isFeatured = !info;
+            const title = isFeatured ? item.title : info.title;
+            const authors = isFeatured
+              ? item.author
+              : info.authors
+              ? info.authors.join(", ")
+              : "Unknown";
+            const image = isFeatured ? item.image : info.imageLinks?.thumbnail;
             const price = Math.abs(
-              item.calculatedPrice || item.saleInfo?.retailPrice?.amount || 20
+              item.calculatedPrice ||
+                item.saleInfo?.retailPrice?.amount ||
+                (isFeatured
+                  ? typeof item.price === "string"
+                    ? parseFloat(item.price.replace("$", ""))
+                    : item.price
+                  : 20)
             );
+
             return (
               <div
                 key={item.id}
@@ -155,19 +174,17 @@ const Cart = () => {
                   style={{ flex: 1, textDecoration: "none" }}
                 >
                   <img
-                    src={info.imageLinks?.thumbnail}
-                    alt={info.title}
+                    src={image}
+                    alt={title}
                     className="w-50 h-50 object-cover rounded group-hover:scale-105 transition-transform duration-200"
                   />
                   <div>
                     <h2
                       className={`text-lg font-semibold ${textClass} group-hover:underline`}
                     >
-                      {info.title}
+                      {title}
                     </h2>
-                    <p className={textGrayClass}>
-                      {info.authors ? info.authors.join(", ") : "Unknown"}
-                    </p>
+                    <p className={textGrayClass}>{authors}</p>
                     <p className={`${textGray800Class} font-bold`}>
                       ${price.toFixed(2)}
                     </p>

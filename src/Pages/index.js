@@ -9,3 +9,4 @@ export { default as Landing } from "./Landing";
 export { default as Product } from "./Product";
 export { default as Register } from "./Register";
 export { default as SingleProduct } from "./SingleProduct";
+export { default as FeaturePage } from "./FeaturePage";

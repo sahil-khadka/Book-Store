@@ -23,15 +23,12 @@ const Hero = () => {
         className="absolute top-0 left-0 w-full h-[47rem] md:h-[47rem] lg:h-[47rem] object-cover -z-10"
         style={{ opacity: 0.7 }}
       />
-      <div className="grid grid-cols-1 lg:grid-cols-2 w-full max-w-7xl mx-auto gap-8 lg:gap-24 items-center relative px-4 md:px-8 ">
+      <div className="grid grid-cols-1 lg:grid-cols-2 w-full max-w-7xl mx-auto gap-8 lg:gap-24 items-center  px-4 md:px-8 ">
         {/* Info */}
         <div>
           <h1 className="text-4xl md:text-5xl lg:text-6xl font-extrabold tracking-wider h-30 bg-gradient-to-r from-cyan-200 to-violet-500 bg-clip-text text-transparent">
             Welcome to Book Store
           </h1>
-          {/* <div>
-            <img src={image1} alt="" />
-          </div> */}
           <div className="w-full my-8">
             <hr className="border-t-2 border-white w-full" />
           </div>
@@ -54,42 +51,30 @@ const Hero = () => {
             </Link>
           </div>
         </div>
-        <img src={image1} className="w-40 absolute right-0 top-0" />
+        <img
+          src={image1}
+          className="w-150 h-auto absolute right-0 top-54 hidden lg:block"
+        />
         <img
           src={image2}
-          className="w-20 md:w-40 lg:w-80 h-auto absolute right-24 top-12"
+          className="w-20 md:w-40 lg:w-80 h-auto absolute right-85 top-69 hidden lg:block"
         />
-
-        {/* Slider */}
-        {/* <div className="hidden h-[32rem] w-[40rem] lg:carousel carousel-center p-4 space-x-4 bg-neutral rounded-box">
-          {sliders.map((slider, index) => {
-            return (
-              <div key={index} className="carousel-item">
-                <img
-                  src={slider}
-                  className="rounded-box h-full w-80 object-cover"
-                />
-                ;
-              </div>
-            );
-          })}
-        </div> */}
       </div>
       <div>
         <h1 className="text-2xl md:text-3xl lg:text-4xl mt-10 font-semibold bg-gradient-to-r text-center from-cyan-200 to-violet-500 bg-clip-text text-transparent">
           Featured Products
         </h1>
       </div>
-
       <div className="w-full my-5">
         <hr className="border-t-2 border-black w-full" />
       </div>
       {/* Featured Books */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-10 px-4 md:px-0">
         {FeaturedBook.map((book) => (
-          <div
-            className="bg-base-200 rounded-lg p-4 shadow-md hover:shadow-lg transition-shadow"
+          <Link
+            to={`/featurepage/${book.id}`}
             key={book.id}
+            className="bg-base-200 rounded-lg p-4 shadow-md hover:shadow-lg transition-shadow block"
           >
             <img
               src={book.image}
@@ -99,7 +84,7 @@ const Hero = () => {
             <h3 className="text-lg font-semibold mb-2">{book.title}</h3>
             <p className="text-gray-600 mb-2">{book.author}</p>
             <p className="text-blue-600 font-bold">{book.price}</p>
-          </div>
+          </Link>
         ))}
       </div>
     </>

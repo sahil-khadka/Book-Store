@@ -12,6 +12,7 @@ import {
   Product,
   Register,
   SingleProduct,
+  FeaturePage,
 } from "./Pages";
 
 import { ErrorElements } from "./Components";
@@ -36,9 +37,9 @@ const router = createBrowserRouter([
         element: <Product />,
       },
       {
-        path: "/singleproduct/:id", // Updated path to match the Link in Product.jsx
+        path: "/singleproduct/:id",
         element: <SingleProduct />,
-        errorElement: <ErrorElements />, // Added errorElement for this route
+        errorElement: <ErrorElements />,
       },
       {
         path: "/cart",
@@ -51,6 +52,10 @@ const router = createBrowserRouter([
       {
         path: "/orders",
         element: <Orders />,
+      },
+      {
+        path: "/featurepage/:id",
+        element: <FeaturePage />,
       },
     ],
   },
