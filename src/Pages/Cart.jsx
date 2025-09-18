@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { removeItem, updateQuantity } from "../features/cartSlice";
+import { NavLink } from "react-router-dom";
 
 const themes = {
   winter: "winter",
@@ -13,6 +14,7 @@ const getThemeLocal = () => {
 };
 
 const Cart = () => {
+  const user = useSelector((state) => state.userState.user);
   const cartItems = useSelector((state) => state.cart.items);
   const [theme, setTheme] = useState(getThemeLocal());
   const dispatch = useDispatch();

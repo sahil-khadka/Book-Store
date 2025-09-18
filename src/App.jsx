@@ -20,6 +20,8 @@ import {
 
 import { ErrorElements } from "./Components";
 
+import { action as registerAction } from "./Pages/Register";
+
 const router = createBrowserRouter([
   {
     path: "/",
@@ -75,6 +77,7 @@ const router = createBrowserRouter([
     path: "/Register",
     element: <Register />,
     errorElement: <Error />,
+    action: registerAction,
   },
 ]);
 

@@ -1,6 +1,6 @@
 import React from "react";
 
-const FormInput = ({ lable, name, type, defaultvalue }) => {
+const FormInput = ({ lable, name, type, defaultValue }) => {
   return (
     <div className="flex flex-col gap-1">
       <label className="text-black font-medium">
@@ -9,7 +9,7 @@ const FormInput = ({ lable, name, type, defaultvalue }) => {
       <input
         type={type}
         name={name}
-        defaultValue={defaultvalue}
+        defaultValue={defaultValue}
         className="px-3 py-2 border rounded-lg text-black"
       />
     </div>
@@ -17,3 +17,4 @@ const FormInput = ({ lable, name, type, defaultvalue }) => {
 };
 
 export default FormInput;
+// filepath: c:\Users\Dell\OneDrive\Desktop\BookStore\src\Components\FormInput.jsx
