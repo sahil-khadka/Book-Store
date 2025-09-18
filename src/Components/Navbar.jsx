@@ -3,16 +3,8 @@ import { FaBarsStaggered } from "react-icons/fa6";
 import { useState, useRef, useEffect } from "react";
 import { BsCart4, BsMoonFill, BsSunFill } from "react-icons/bs";
 import NavLinks from "./NavLinks";
-import { useSelector } from "react-redux";
-
-const themes = {
-  winter: "winter",
-  dracula: "dracula",
-};
-
-const getThemeLocal = () => {
-  return localStorage.getItem("theme") || themes.winter;
-};
+import { useSelector, useDispatch } from "react-redux";
+import { toggleTheme } from "../features/userSlice";
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -22,16 +14,11 @@ const Navbar = () => {
   );
 
   // Theme toggle
-  const [theme, setTheme] = useState(getThemeLocal());
+  const dispatch = useDispatch();
+
   const handleTheme = () => {
-    const { winter, dracula } = themes;
-    const newTheme = theme === winter ? dracula : winter;
-    setTheme(newTheme);
+    dispatch(toggleTheme());
   };
-  useEffect(() => {
-    document.documentElement.setAttribute("data-theme", theme);
-    localStorage.setItem("theme", theme);
-  }, [theme]);
 
   // Close dropdown when clicking outside
   useEffect(() => {
@@ -56,7 +43,7 @@ const Navbar = () => {
         <div className="justify-self-start">
           <NavLink
             to="/"
-            className="  flex items-center justify-center w-18 lg:flex text-5xl mt-3 mb-3 rounded-lg px-5 py-3 font-extrabold bg-gradient-to-r from-rose-500 to-green-300 bg-clip-text text-transparent hover:text-red-300 transition-all"
+            className="  flex items-center justify-center  w-18 lg:flex text-5xl mt-3 mb-3 rounded-lg px-5 py-3 font-extrabold bg-gradient-to-r from-rose-500 to-green-300 bg-clip-text text-transparent hover:text-red-300 transition-all"
           >
             BK
           </NavLink>
@@ -69,9 +56,9 @@ const Navbar = () => {
             <div className="bg-base-100">
               <ul
                 ref={dropdownRef}
-                className="absolute left-3 mt-2 p-5 bg-base-200 rounded-lg shadow-lg"
+                className="absolute left-3 mt-2 p-5 bg-base-200 rounded-lg shadow-lg text-black"
               >
-                <li className="rounded-2xl hover:bg-base-300">
+                <li className="rounded-2xl ">
                   <NavLinks isDropdown={true} />
                 </li>
               </ul>
@@ -79,7 +66,7 @@ const Navbar = () => {
           )}
         </div>
         <div className="justify-self-center hidden lg:flex">
-          <ul className="flex gap-15 font-bold">
+          <ul className="flex gap-15 font-bold text-white">
             <NavLinks isDropdown={false} />
           </ul>
         </div>

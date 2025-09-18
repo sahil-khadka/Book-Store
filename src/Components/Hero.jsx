@@ -45,7 +45,7 @@ const Hero = () => {
           <div className="mt-5">
             <Link
               to="/product"
-              className="btn btn-block btn-secondary btn-dash btn-xl text-white border-white"
+              className="btn btn-block  btn-dash btn-xl text-white border-white bg-violet-400 rounded-2xl border-2"
             >
               Our Products
             </Link>

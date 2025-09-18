@@ -6,7 +6,7 @@ const SubmitBtn = ({ text }) => {
   return (
     <button
       type="submit"
-      className="bg-blue-600 text-white font-semibold mt-4 rounded-lg px-5 py-3 hover:bg-green-300 transition-all"
+      className="bg-blue-600 text-white btn-block font-semibold mt-4 rounded-lg px-5 py-3 hover:bg-green-300 transition-all"
     >
       {isSubmitting ? (
         <>

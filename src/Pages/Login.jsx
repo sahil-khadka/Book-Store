@@ -15,7 +15,7 @@ const Login = () => {
       <section className="h-screen grid place-items-center  ">
         <Form
           method="post"
-          className=" w-96 p-8 bg-white rounded-lg flex flex-col gap-y-4 shadow-lg/30"
+          className=" w-130 h-120 p-8 bg-white rounded-lg flex flex-col gap-y-4 shadow-lg/30"
         >
           <h4 className=" text-center text-3xl font-bold text-black">Login</h4>
           <FormInput
