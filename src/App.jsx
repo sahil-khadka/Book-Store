@@ -1,4 +1,7 @@
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+import AnimatedPage from "./features/AnimatedPage";
 
 import {
   About,
@@ -20,7 +23,11 @@ import { ErrorElements } from "./Components";
 const router = createBrowserRouter([
   {
     path: "/",
-    element: <HomeLayout />,
+    element: (
+      <AnimatedPage>
+        <HomeLayout />
+      </AnimatedPage>
+    ),
     errorElement: <Error />,
     children: [
       {
@@ -72,7 +79,12 @@ const router = createBrowserRouter([
 ]);
 
 const App = () => {
-  return <RouterProvider router={router} />;
+  return (
+    <>
+      <ToastContainer />
+      <RouterProvider router={router} />
+    </>
+  );
 };
 
 export default App;

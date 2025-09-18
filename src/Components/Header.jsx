@@ -10,7 +10,9 @@ const Header = () => {
   const handleLogout = () => {
     dispatch(logoutUser());
     dispatch(clearCart());
-    navigate("/");
+    setTimeout(() => {
+      navigate("/");
+    }, 60);
   };
 
   return (

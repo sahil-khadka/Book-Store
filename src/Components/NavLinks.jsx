@@ -16,7 +16,7 @@ const NavLinks = ({ isDropdown, setIsOpen }) => {
     <>
       {links.map((link) => {
         const { id, url, text } = link;
-        if (text === "Checkout" && !user) return null;
+        if ((url === "/checkout" || url === "/orders") && !user) return null;
         return (
           <li key={id}>
             <NavLink
