@@ -20,13 +20,13 @@ const Login = () => {
           <h4 className=" text-center text-3xl font-bold text-black">Login</h4>
           <FormInput
             type="email"
-            lable="Email"
+            label="Email"
             name="identifier"
             defaultvalue="test@test.com"
           />
           <FormInput
             type="password"
-            lable="Passowrd"
+            label="Passowrd"
             name="password"
             defaultvalue="sceret"
           />

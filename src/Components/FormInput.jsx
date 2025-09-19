@@ -1,10 +1,11 @@
+import { label } from "framer-motion/client";
 import React from "react";
 
-const FormInput = ({ lable, name, type, defaultValue }) => {
+const FormInput = ({ label, name, type, defaultValue }) => {
   return (
     <div className="flex flex-col gap-1">
       <label className="text-black font-medium">
-        <span className="">{lable}</span>
+        <span className="">{label}</span>
       </label>
       <input
         type={type}
