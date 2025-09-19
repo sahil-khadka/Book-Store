@@ -21,6 +21,9 @@ import {
 import { ErrorElements } from "./Components";
 
 import { action as registerAction } from "./Pages/Register";
+import { action as loginAction } from "./Pages/Login";
+
+import { store } from "./app";
 
 const router = createBrowserRouter([
   {
@@ -72,6 +75,7 @@ const router = createBrowserRouter([
     path: "/login",
     element: <Login />,
     errorElement: <Error />,
+    action: loginAction(store),
   },
   {
     path: "/Register",

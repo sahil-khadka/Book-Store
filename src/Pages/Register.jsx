@@ -1,4 +1,4 @@
-import { FormInput, SubmitBtn } from "../components";
+import { FormInput, SubmitBtn } from "../Components/index";
 import { Form, Link, redirect } from "react-router-dom";
 import { detailFetch } from "../utils/detail";
 import { toast } from "react-toastify";

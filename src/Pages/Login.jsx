@@ -1,5 +1,14 @@
-import { FormInput, SubmitBtn } from "../Components/index";
-import { Form, Link, Links } from "react-router-dom";
+import { FormInput, SubmitBtn } from "../components";
+import { Form, Link, redirect, useNavigate } from "react-router-dom";
+import { detailFetch } from "../utils/detail";
+import { toast } from "react-toastify";
+import { loginUser } from "../features/userSlice";
+import { useDispatch } from "react-redux";
+
+export const action = async (store) => {
+  console.log(store);
+  return null;
+};
 
 const Login = () => {
   return (
