@@ -140,190 +140,266 @@ const Product = () => {
   if (loading)
     return (
       <div className="flex justify-center items-center min-h-screen">
-        <div className="animate-spin rounded-full h-32 w-32 border-b-4 border-blue-600 duration-1000"></div>
+        <div className="animate-spin rounded-full h-20 w-20 border-t-4 border-blue-500"></div>
       </div>
     );
-  if (error) return <div className="text-red-500">{error}</div>;
+  if (error) return <div className="text-red-500 text-center p-4">{error}</div>;
 
   return (
     <>
       <img
         src={pro}
         alt="Books background"
-        className="fixed top-0 left-0 object-cover -z-10 min-h-screen w-full"
+        className="fixed inset-0 w-full h-full object-cover -z-10"
         style={{ opacity: 0.7 }}
       />
       <div
-        className={`min-h-screen ${classes.bg} py-6 sm:py-8 md:py-12 lg:py-19 px-4 sm:px-6 md:px-8 lg:px-19 pt-20 rounded-3xl relative`}
+        className={`min-h-screen ${
+          theme === "dracula" ? "bg-gray-900/80" : "bg-white/80"
+        } backdrop-blur-sm pt-20 pb-10`}
       >
-        <div className="mb-8 flex justify-center">
-          <div className="relative w-full max-w-md flex">
-            <input
-              type="text"
-              value={search}
-              onChange={handleSearchChange}
-              onKeyDown={(e) => {
-                if (e.key === "Enter") handleSearchSubmit();
-              }}
-              placeholder="Search by book title..."
-              className={`w-full pl-10 pr-4 py-3 border rounded-l-full focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent shadow-md ${classes.searchBg} ${classes.searchText}`}
-            />
-            <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-              <svg
-                className="w-5 h-5 text-gray-400"
-                fill="none"
-                stroke="currentColor"
-                viewBox="0 0 24 24"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth={2}
-                  d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"
-                />
-              </svg>
-            </div>
-            <button
-              onClick={handleSearchSubmit}
-              className="px-6 py-3 bg-blue-600 text-white rounded-r-full hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 "
-            >
-              Search
-            </button>
-          </div>
-        </div>
-        {!loading && displayedBooks.length === 0 && (
-          <div className="text-center font-bold text-3xl text-red-500 mt-10">
-            <img
-              src={notimg}
-              alt="Not found"
-              className="mx-auto w-full max-w-xs h-auto rounded-2xl"
-            />
-          </div>
-        )}
-        {/* Responsive grid: 2 columns on mobile, 3 on medium and up */}
-        <div className="grid grid-cols-2 md:grid-cols-3 gap-6 ">
-          {displayedBooks.map((book) => {
-            const info = book.volumeInfo;
-            const priceAmount =
-              book.saleInfo?.retailPrice?.amount ||
-              parseFloat(generateFixedPrice(book.id));
-            const price = `$${Math.abs(priceAmount)}`;
-            return (
-              <Link
-                to={`/singleproduct/${book.id}`}
-                state={{ book, currentPage, query }}
-                key={book.id}
-                className={`${classes.card} rounded-lg shadow-lg p-4 flex flex-col relative hover:shadow-xl hover:scale-105 transition duration-100 border`}
-                style={{ textDecoration: "none" }}
-              >
-                <img
-                  src={info.imageLinks?.thumbnail}
-                  alt={info.title}
-                  className="h-48 w-full max-w-xs mx-auto mb-4 rounded object-cover"
-                />
-                <h2
-                  className={`text-2xl font-bold mb-2 text-center ${classes.text}`}
-                >
-                  {info.title}
-                </h2>
-                <p className={`text-lg ${classes.textGray} mb-1 text-center`}>
-                  {info.authors?.join(", ") || "Unknown"}
-                </p>
-                {info.averageRating && (
-                  <p className={`${classes.textGray} mb-2`}>
-                    <span className="font-semibold">Rating:</span>{" "}
-                    {info.averageRating}/5{" "}
-                    {Array.from({ length: 5 }, (_, i) => (
-                      <span
-                        key={i}
-                        className={
-                          i < Math.floor(info.averageRating)
-                            ? "text-yellow-500"
-                            : "text-gray-300"
-                        }
-                      >
-                        ★
-                      </span>
-                    ))}
-                    {info.ratingsCount && ` (${info.ratingsCount} ratings)`}
-                  </p>
-                )}
-                <div className="mt-auto">
-                  <p
-                    className={`text-2xl ${classes.textGray800} font-semibold text-center mb-2`}
-                  >
-                    {price}
-                  </p>
-                  <div className="flex flex-col sm:flex-row justify-between items-center gap-2">
-                    <span className="text-blue-600 hover:underline">
-                      More Info
-                    </span>
-                    <button
-                      onClick={(e) => {
-                        e.preventDefault();
-                        e.stopPropagation();
-                        handleAddToCart(book);
-                      }}
-                      className="bg-yellow-500 text-white px-4 py-2 rounded hover:bg-yellow-300 hover:text-black transition duration-300 hover:cursor-pointer w-full sm:w-auto"
-                    >
-                      Add to Cart
-                    </button>
-                  </div>
-                </div>
-              </Link>
-            );
-          })}
-        </div>
-        {!loading && displayedBooks.length > 0 && (
-          <div className="flex flex-wrap justify-center mt-8 gap-2">
-            <button
-              onClick={() => setCurrentPage(currentPage - 1)}
-              disabled={currentPage === 1}
-              className={`mx-2 px-4 py-2 rounded font-bold text-2xl ${
-                currentPage === 1
-                  ? "bg-gray-300 text-gray-500 cursor-not-allowed"
-                  : classes.button
-              }`}
-            >
-              &lt;
-            </button>
-            {Array.from(
-              { length: Math.ceil(filteredBooks.length / BOOKS_PER_PAGE) || 1 },
-              (_, i) => (
-                <button
-                  key={i}
-                  onClick={() => setCurrentPage(i + 1)}
-                  className={`mx-2 px-4 py-2 rounded ${
-                    currentPage === i + 1
-                      ? classes.paginationActive
-                      : classes.pagination
+        <div className="container mx-auto px-6">
+          <div className="mb-10 flex justify-center">
+            <div className="relative max-w-lg w-full">
+              <input
+                type="text"
+                value={search}
+                onChange={handleSearchChange}
+                onKeyDown={(e) => {
+                  if (e.key === "Enter") handleSearchSubmit();
+                }}
+                placeholder="Search by book title..."
+                className={`w-full py-4 pl-12 pr-4 text-lg rounded-full border-2 focus:outline-none focus:ring-4 focus:ring-blue-300 transition-all duration-300 ${
+                  theme === "dracula"
+                    ? "bg-gray-800 border-gray-600 text-white placeholder-gray-400"
+                    : "bg-white border-gray-300 text-gray-900 placeholder-gray-500"
+                }`}
+              />
+              <div className="absolute left-4 top-1/2 transform -translate-y-1/2">
+                <svg
+                  className={`w-6 h-6 ${
+                    theme === "dracula" ? "text-gray-400" : "text-gray-500"
                   }`}
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
                 >
-                  {i + 1}
-                </button>
-              )
-            )}
-            <button
-              onClick={() => setCurrentPage(currentPage + 1)}
-              disabled={
-                currentPage ===
-                  Math.ceil(filteredBooks.length / BOOKS_PER_PAGE) ||
-                filteredBooks.length === 0
-              }
-              className={`mx-2 px-4 py-2 rounded font-bold text-2xl ${
-                currentPage ===
-                  Math.ceil(filteredBooks.length / BOOKS_PER_PAGE) ||
-                filteredBooks.length === 0
-                  ? "bg-gray-300 text-gray-500 cursor-not-allowed"
-                  : classes.button
-              }`}
-            >
-              &gt;
-            </button>
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2}
+                    d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"
+                  />
+                </svg>
+              </div>
+              <button
+                onClick={handleSearchSubmit}
+                className="absolute right-2 top-1/2 transform -translate-y-1/2 bg-gradient-to-r from-blue-500 to-purple-600 text-white px-6 py-2 rounded-full hover:from-blue-600 hover:to-purple-700 transition-all duration-300 font-semibold cursor-pointer"
+              >
+                Search
+              </button>
+            </div>
           </div>
-        )}
-        <ToastContainer theme={theme === THEMES.dracula ? "dark" : "light"} />
+
+          {!loading && displayedBooks.length === 0 && (
+            <div className="text-center py-20">
+              <img
+                src={notimg}
+                alt="Not found"
+                className="mx-auto w-64 h-auto rounded-xl shadow-lg mb-6"
+              />
+              <p
+                className={`text-2xl font-bold ${
+                  theme === "dracula" ? "text-gray-300" : "text-gray-700"
+                }`}
+              >
+                No books found
+              </p>
+            </div>
+          )}
+
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 max-w-7xl mx-auto">
+            {displayedBooks.map((book) => {
+              const info = book.volumeInfo;
+              const priceAmount =
+                book.saleInfo?.retailPrice?.amount ||
+                parseFloat(generateFixedPrice(book.id));
+              const price = `$${Math.abs(priceAmount)}`;
+              return (
+                <Link
+                  to={`/singleproduct/${book.id}`}
+                  state={{ book, currentPage, query }}
+                  key={book.id}
+                  className={`block ${
+                    theme === "dracula" ? "bg-gray-800" : "bg-white"
+                  } rounded-2xl shadow-xl hover:shadow-2xl transform hover:-translate-y-2 transition-all duration-300 overflow-hidden group border border-gray-200 cursor-pointer`}
+                  style={{ textDecoration: "none" }}
+                >
+                  {/* Image Section */}
+                  <div className="relative h-64 bg-gray-100 flex items-center justify-center overflow-hidden">
+                    <img
+                      src={info.imageLinks?.thumbnail || notimg}
+                      alt={info.title}
+                      className="max-w-full max-h-full object-contain group-hover:scale-105 transition-transform duration-300"
+                    />
+                    <div className="absolute top-3 right-3">
+                      <span className="bg-gradient-to-r from-green-500 to-blue-500 text-white px-3 py-1 rounded-full text-sm font-bold shadow-lg">
+                        {price}
+                      </span>
+                    </div>
+                  </div>
+
+                  {/* Content Section */}
+                  <div className="p-6 space-y-4">
+                    <h2
+                      className={`text-lg font-bold leading-tight ${
+                        theme === "dracula" ? "text-white" : "text-gray-900"
+                      } line-clamp-2 min-h-[3.5rem]`}
+                    >
+                      {info.title}
+                    </h2>
+
+                    <p
+                      className={`text-sm ${
+                        theme === "dracula" ? "text-gray-300" : "text-gray-600"
+                      } font-medium`}
+                    >
+                      by {info.authors?.join(", ") || "Unknown Author"}
+                    </p>
+
+                    {info.averageRating && (
+                      <div className="flex items-center gap-2">
+                        <div className="flex">
+                          {Array.from({ length: 5 }, (_, i) => (
+                            <span
+                              key={i}
+                              className={`text-lg ${
+                                i < Math.floor(info.averageRating)
+                                  ? "text-yellow-400"
+                                  : theme === "dracula"
+                                  ? "text-gray-600"
+                                  : "text-gray-300"
+                              }`}
+                            >
+                              ★
+                            </span>
+                          ))}
+                        </div>
+                        <span
+                          className={`text-sm font-semibold ${
+                            theme === "dracula"
+                              ? "text-gray-300"
+                              : "text-gray-600"
+                          }`}
+                        >
+                          {info.averageRating}/5
+                        </span>
+                        {info.ratingsCount && (
+                          <span
+                            className={`text-xs ${
+                              theme === "dracula"
+                                ? "text-gray-400"
+                                : "text-gray-500"
+                            }`}
+                          >
+                            ({info.ratingsCount})
+                          </span>
+                        )}
+                      </div>
+                    )}
+
+                    {/* Action Buttons */}
+                    <div className="space-y-3 pt-4">
+                      <div className="block w-full text-center bg-gradient-to-r from-blue-500 to-purple-600 hover:from-blue-600 hover:to-purple-700 text-white py-2.5 px-4 rounded-lg font-semibold transition-all duration-300 transform hover:scale-105 cursor-pointer">
+                        View Details
+                      </div>
+                      <button
+                        onClick={(e) => {
+                          e.preventDefault();
+                          e.stopPropagation();
+                          handleAddToCart(book);
+                        }}
+                        className="w-full bg-gradient-to-r from-green-500 to-teal-500 hover:from-green-600 hover:to-teal-600 text-white py-2.5 px-4 rounded-lg font-semibold transition-all duration-300 transform hover:scale-105 cursor-pointer"
+                      >
+                        Add to Cart
+                      </button>
+                    </div>
+                  </div>
+                </Link>
+              );
+            })}
+          </div>
+
+          {!loading && displayedBooks.length > 0 && (
+            <div className="flex justify-center items-center mt-16 space-x-2">
+              <button
+                onClick={() => setCurrentPage(currentPage - 1)}
+                disabled={currentPage === 1}
+                className={`px-6 py-3 rounded-xl font-bold text-lg transition-all duration-300 ${
+                  currentPage === 1
+                    ? "bg-gray-300 text-gray-500 cursor-not-allowed"
+                    : `${
+                        theme === "dracula"
+                          ? "bg-gray-700 hover:bg-gray-600 text-white"
+                          : "bg-white hover:bg-gray-50 text-gray-700"
+                      } shadow-lg hover:shadow-xl transform hover:scale-105 cursor-pointer`
+                }`}
+              >
+                ← Previous
+              </button>
+
+              <div className="flex space-x-1">
+                {Array.from(
+                  {
+                    length:
+                      Math.ceil(filteredBooks.length / BOOKS_PER_PAGE) || 1,
+                  },
+                  (_, i) => (
+                    <button
+                      key={i}
+                      onClick={() => setCurrentPage(i + 1)}
+                      className={`w-12 h-12 rounded-xl font-bold text-lg transition-all duration-300 transform hover:scale-110 cursor-pointer ${
+                        currentPage === i + 1
+                          ? "bg-gradient-to-r from-blue-500 to-purple-600 text-white shadow-xl"
+                          : `${
+                              theme === "dracula"
+                                ? "bg-gray-700 hover:bg-gray-600 text-white"
+                                : "bg-white hover:bg-gray-50 text-gray-700"
+                            } shadow-md hover:shadow-lg`
+                      }`}
+                    >
+                      {i + 1}
+                    </button>
+                  )
+                )}
+              </div>
+
+              <button
+                onClick={() => setCurrentPage(currentPage + 1)}
+                disabled={
+                  currentPage ===
+                    Math.ceil(filteredBooks.length / BOOKS_PER_PAGE) ||
+                  filteredBooks.length === 0
+                }
+                className={`px-6 py-3 rounded-xl font-bold text-lg transition-all duration-300 ${
+                  currentPage ===
+                    Math.ceil(filteredBooks.length / BOOKS_PER_PAGE) ||
+                  filteredBooks.length === 0
+                    ? "bg-gray-300 text-gray-500 cursor-not-allowed"
+                    : `${
+                        theme === "dracula"
+                          ? "bg-gray-700 hover:bg-gray-600 text-white"
+                          : "bg-white hover:bg-gray-50 text-gray-700"
+                      } shadow-lg hover:shadow-xl transform hover:scale-105 cursor-pointer`
+                }`}
+              >
+                Next →
+              </button>
+            </div>
+          )}
+        </div>
       </div>
+      <ToastContainer theme={theme === THEMES.dracula ? "dark" : "light"} />
     </>
   );
 };

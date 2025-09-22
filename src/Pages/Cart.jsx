@@ -131,7 +131,7 @@ const Cart = () => {
           "https://images.unsplash.com/photo-1709385283538-d3258a461032?fm=jpg&q=60&w=3000&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTl8fGJvb2tzdG9yZXxlbnwwfHwwfHx8MA%3D%3D"
         }
         alt="Books background"
-        className="fixed top-0 left-0 object-cover -z-10 min-h-screen w-full"
+        className="fixed top-0 left-0 object-cover -z-10 min-h-screen w-full "
         style={{ opacity: 0.7 }}
       />
       <div
@@ -203,7 +203,10 @@ const Cart = () => {
                       </h2>
                       <p className={textGrayClass}>{authors}</p>
                       <p className={`${textGray800Class} font-bold`}>
-                        ${price.toFixed(2)}
+                        ${Math.abs(price).toFixed(2)}
+                      </p>
+                      <p className={`${textGrayClass} text-sm`}>
+                        Quantity: {item.quantity}
                       </p>
                     </div>
                   </Link>
@@ -242,7 +245,7 @@ const Cart = () => {
           </div>
           <div className="mt-8 flex flex-col sm:flex-row justify-between items-center">
             <h2 className={`text-2xl font-bold ${textClass} mb-4 sm:mb-0`}>
-              Total: ${getTotalPrice()}
+              Total: ${Math.abs(parseFloat(getTotalPrice())).toFixed(2)}
             </h2>
             <div className="space-x-4">
               <Link

@@ -12,6 +12,7 @@ const Navbar = () => {
   const cartCount = useSelector((state) =>
     state.cart.items.reduce((sum, item) => sum + item.quantity, 0)
   );
+  const theme = useSelector((state) => state.userState.theme);
 
   // Theme toggle
   const dispatch = useDispatch();
@@ -38,54 +39,113 @@ const Navbar = () => {
   }, [isOpen]);
 
   return (
-    <nav className=" relative">
-      <div className="align-element rounded-2xl text-base-content grid grid-cols-3 items-center">
-        <div className="justify-self-start">
-          <NavLink
-            to="/"
-            className="  flex items-center justify-center  w-18 lg:flex text-5xl mt-3 mb-3 rounded-lg px-5 py-3 font-extrabold bg-gradient-to-r from-rose-500 to-green-300 bg-clip-text text-transparent hover:text-red-300 transition-all"
-          >
-            BK
-          </NavLink>
-          <button onClick={() => setIsOpen(!isOpen)} className="lg:hidden">
-            <FaBarsStaggered className="h-9 w-9 mt-2 mb-2" />
-          </button>
+    <nav
+      className={`${
+        theme === "dracula" ? "bg-gray-800" : "bg-white"
+      } shadow-md border-b ${
+        theme === "dracula" ? "border-gray-700" : "border-gray-200"
+      } sticky top-0 z-50`}
+    >
+      <div className="max-w-7xl mx-auto px-4">
+        <div className="flex items-center justify-between h-16">
+          {/* Mobile menu and logo */}
+          <div className="flex items-center space-x-4">
+            <NavLink
+              to="/"
+              className={`text-2xl font-bold ${
+                theme === "dracula"
+                  ? "text-blue-400 hover:text-blue-300"
+                  : "text-blue-600 hover:text-blue-700"
+              } transition-colors duration-200`}
+            >
+              BK
+            </NavLink>
+            <button
+              onClick={() => setIsOpen(!isOpen)}
+              className={`md:hidden ${
+                theme === "dracula"
+                  ? "text-gray-300 hover:text-blue-400"
+                  : "text-gray-600 hover:text-blue-600"
+              } p-2 rounded transition-colors duration-200`}
+            >
+              <FaBarsStaggered className="text-lg" />
+            </button>
 
-          {/* Dropdown menu */}
-          {isOpen && (
-            <div className="bg-base-100">
-              <ul
-                ref={dropdownRef}
-                className="absolute left-3 mt-2 p-5 bg-base-200 rounded-lg shadow-lg text-black"
+            {/* Dropdown menu */}
+            {isOpen && (
+              <div
+                className={`absolute top-16 left-0 w-full ${
+                  theme === "dracula" ? "bg-gray-800" : "bg-white"
+                } shadow-lg border-t ${
+                  theme === "dracula" ? "border-gray-700" : "border-gray-200"
+                } md:hidden z-50`}
               >
-                <li className="rounded-2xl ">
-                  <NavLinks isDropdown={true} />
-                </li>
-              </ul>
-            </div>
-          )}
-        </div>
-        <div className="justify-self-center hidden lg:flex">
-          <ul className="flex gap-15 font-bold text-white">
-            <NavLinks isDropdown={false} />
-          </ul>
-        </div>
-        <div className="justify-self-end absolute top-5 right-19  transition-colors flex gap-4">
-          <div className="ml-2 items-center flex">
-            <label className="swap swap-rotate">
-              <input type="checkbox" onChange={handleTheme} />
-              <BsSunFill className="swap-on h-7 w-7 text-amber-300" />
-              <BsMoonFill className="swap-off h-7 w-7 text-black" />
-            </label>
+                <ul ref={dropdownRef} className="py-2">
+                  <li className="px-4">
+                    <NavLinks isDropdown={true} />
+                  </li>
+                </ul>
+              </div>
+            )}
           </div>
-          <NavLink to="/cart" className="">
-            <div className="relative inline-block">
-              <BsCart4 className="h-10 w-9 p-1 rounded border border-base-content" />
-              <span className="absolute -top-2 -right-2 bg-primary text-primary-content text-xs font-semibold w-5 h-5 flex items-center justify-center rounded-full">
-                {cartCount}
-              </span>
+
+          {/* Desktop navigation */}
+          <div className="hidden md:block">
+            <ul className="flex space-x-6">
+              <NavLinks isDropdown={false} />
+            </ul>
+          </div>
+
+          {/* Right side - Theme toggle and cart */}
+          <div className="flex items-center space-x-4">
+            {/* Theme toggle */}
+            <div className="relative">
+              <label className="flex items-center cursor-pointer">
+                <input
+                  type="checkbox"
+                  onChange={handleTheme}
+                  className="sr-only"
+                />
+                <div
+                  className={`relative w-12 h-6 ${
+                    theme === "dracula" ? "bg-gray-600" : "bg-gray-300"
+                  } rounded-full p-1 transition-colors duration-300`}
+                >
+                  <div
+                    className={`flex items-center justify-between w-full h-full text-xs ${
+                      theme === "dracula" ? "text-gray-300" : "text-gray-600"
+                    }`}
+                  >
+                    <BsSunFill className="transition-opacity duration-300 text-amber-400" />
+                    <BsMoonFill className="transition-opacity duration-300 text-black" />
+                  </div>
+                  <div
+                    className={`absolute top-1 w-4 h-4 bg-white rounded-full shadow transform transition-transform duration-300 ${
+                      theme === "dracula" ? "translate-x-6" : "translate-x-0"
+                    }`}
+                  ></div>
+                </div>
+              </label>
             </div>
-          </NavLink>
+
+            {/* Cart */}
+            <NavLink to="/cart" className="relative">
+              <div
+                className={`flex items-center ${
+                  theme === "dracula"
+                    ? "text-gray-300 hover:text-blue-400"
+                    : "text-gray-600 hover:text-blue-600"
+                } transition-colors duration-200 p-2 rounded`}
+              >
+                <BsCart4 className="text-xl" />
+                {cartCount > 0 && (
+                  <span className="absolute -top-1 -right-1 bg-red-500 text-white text-xs font-bold rounded-full h-5 w-5 flex items-center justify-center">
+                    {cartCount}
+                  </span>
+                )}
+              </div>
+            </NavLink>
+          </div>
         </div>
       </div>
     </nav>

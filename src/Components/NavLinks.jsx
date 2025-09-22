@@ -24,15 +24,15 @@ const NavLinks = ({ isDropdown, setIsOpen }) => {
               end
               onClick={isDropdown ? () => setIsOpen(false) : undefined}
               className={({ isActive }) =>
-                `capitalize px-9 py-3 rounded transition-all flex 
+                `capitalize px-10 py-3 rounded transition-all flex 
                 ${
                   isActive
-                    ? "border-1  border-black font-extrabold hover:text-rose-00 hover:shadow-2xl text-rose-700 "
-                    : "hover:shadow-lg hover:shadow-black hover:text-rose-700 "
+                    ? "border-1  border-black font-medium hover:text-rose-00 hover:shadow-2xl  "
+                    : "hover:shadow-xl hover:backdrop-blur font-medium"
                 }
                 ${
                   !isDropdown && text === "Cart"
-                    ? "bg-black h-15 w-25 flex items-center justify-center text-white font-bold hover:bg-gray-200"
+                    ? "bg-black h-15 w-25 flex items-center justify-center text-white font-medium hover:bg-gray-200"
                     : ""
                 }`
               }

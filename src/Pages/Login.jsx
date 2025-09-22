@@ -1,14 +1,29 @@
-import { FormInput, SubmitBtn } from "../components";
+import { FormInput, SubmitBtn } from "../Components/index";
 import { Form, Link, redirect, useNavigate } from "react-router-dom";
 import { detailFetch } from "../utils/detail";
 import { toast } from "react-toastify";
 import { loginUser } from "../features/userSlice";
 import { useDispatch } from "react-redux";
 
-export const action = async (store) => {
-  console.log(store);
-  return null;
-};
+export const action =
+  (store) =>
+  async ({ request }) => {
+    const formData = await request.formData();
+    const data = Object.fromEntries(formData);
+
+    try {
+      const response = await detailFetch.post("/auth/local", data);
+      store.dispatch(loginUser(response.data));
+      toast.success("Account Logged Successfully");
+      return redirect("/");
+    } catch (error) {
+      const errorMessage =
+        error?.response?.data?.error?.message ||
+        "please double check your credentials";
+      toast.error(errorMessage);
+      return null;
+    }
+  };
 
 const Login = () => {
   return (
