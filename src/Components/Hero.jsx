@@ -125,10 +125,10 @@ const Hero = () => {
                 </div>
 
                 {/* Content Section */}
-                <div className="p-8 relative">
+                <div className="py-4 px-5 relative">
                   {/* Title */}
                   <h3
-                    className={`text-2xl font-bold mb-4 leading-tight ${
+                    className={`text-xl font-bold mb-4 leading-tight ${
                       theme === "dracula"
                         ? "text-white group-hover:text-orange-300"
                         : "text-slate-800 group-hover:text-orange-600"
@@ -138,10 +138,10 @@ const Hero = () => {
                   </h3>
 
                   {/* Author with Icon */}
-                  <div className="flex items-center mb-6">
+                  <div className="flex items-center mb-4">
                     <div className="w-2 h-2 bg-orange-400 rounded-full mr-3"></div>
                     <p
-                      className={`text-lg font-medium ${
+                      className={`text-sm font-medium ${
                         theme === "dracula" ? "text-gray-300" : "text-slate-600"
                       }`}
                     >
@@ -150,7 +150,7 @@ const Hero = () => {
                   </div>
 
                   {/* Bottom Action Area */}
-                  <div className="flex items-center justify-between mt-8">
+                  <div className="flex items-center justify-between ">
                     <div
                       className={`text-sm font-semibold ${
                         theme === "dracula" ? "text-gray-400" : "text-slate-500"

@@ -27,8 +27,8 @@ const NavLinks = ({ isDropdown, setIsOpen }) => {
                 `capitalize px-10 py-3 rounded transition-all flex 
                 ${
                   isActive
-                    ? "border-1  border-black font-medium hover:text-rose-00 hover:shadow-2xl  "
-                    : "hover:shadow-xl hover:backdrop-blur font-medium"
+                    ? "border-1  border-black font-medium   "
+                    : "hover:border-b hover:rounded-b-none  font-medium"
                 }
                 ${
                   !isDropdown && text === "Cart"

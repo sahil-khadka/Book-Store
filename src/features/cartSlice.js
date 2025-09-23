@@ -13,15 +13,21 @@ const cartSlice = createSlice({
       const existingItem = state.items.find((item) => item.id === newItem.id);
 
       if (existingItem) {
-        // If item exists, increase quantity
-        existingItem.quantity += 1;
+        // Add the new quantity to existing quantity
+        existingItem.quantity += newItem.quantity;
       } else {
-        // If new item, add with quantity 1
+        // Add new item with specified quantity
         state.items.push({
           ...newItem,
-          quantity: 1, // Make sure quantity is always set
+          quantity: newItem.quantity,
         });
       }
+
+      // Recalculate total
+      state.total = state.items.reduce(
+        (total, item) => total + item.calculatedPrice * item.quantity,
+        0
+      );
     },
     removeItem: (state, action) => {
       state.items = state.items.filter((item) => item.id !== action.payload);
