@@ -1,12 +1,71 @@
-# React + Vite
+# BookStore
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A modern, responsive bookstore application built with React and powered by Vite for fast development and optimal performance.
 
-Currently, two official plugins are available:
+## 🚀 Features
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+- **Modern React Architecture**: Built with React 19 and functional components
+- **State Management**: Redux Toolkit for efficient state management
+- **Data Fetching**: TanStack React Query for server state management
+- **Routing**: React Router DOM for seamless navigation
+- **Styling**: Tailwind CSS with DaisyUI components for beautiful UI
+- **Animations**: Framer Motion for smooth, interactive animations
+- **API Integration**: Axios for HTTP requests
+- **Notifications**: React Toastify for user feedback
+- **Icons**: React Icons for consistent iconography
 
-## Expanding the ESLint configuration
+## 🛠️ Tech Stack
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+- **Frontend**: React 19, TypeScript
+- **Styling**: Tailwind CSS 4, DaisyUI
+- **State Management**: Redux Toolkit, React Redux
+- **Data Fetching**: TanStack React Query, Axios
+- **Animation**: Framer Motion
+- **Build Tool**: Vite
+- **Routing**: React Router DOM
+- **Notifications**: React Toastify
+
+## 🚦 Getting Started
+
+### Prerequisites
+
+- Node.js (version 16 or higher)
+- npm or yarn
+
+### Installation
+
+1. Clone the repository
+
+```bash
+git clone <repository-url>
+cd BookStore
+```
+
+2. Install dependencies
+
+```bash
+npm install
+```
+
+3. Start the development server
+
+```bash
+npm run dev
+```
+
+4. Open your browser and navigate to `http://localhost:5173`
+
+## 📦 Available Scripts
+
+- `npm run dev` - Start development server
+- `npm run build` - Build for production
+- `npm run preview` - Preview production build
+- `npm run lint` - Run ESLint
+
+## 🏗️ Project Structure
+
+The application follows modern React best practices with a clean, scalable architecture suitable for a bookstore management system.
+
+## 🤝 Contributing
+
+Contributions are welcome! Please feel free to submit a Pull Request.
