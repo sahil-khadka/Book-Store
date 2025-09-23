@@ -18,10 +18,10 @@ const Hero = () => {
         className="w-full blur-sm h-screen object-cover fixed top-0 left-0 -z-20"
         style={{ opacity: 0.6 }}
       />
-      <div className="relative min-h-screen bg-base-300 bg-opacity-20 flex items-center justify-center rounded-xl">
+      <div className="relative min-h-screen bg-gradient-to-b from-transparent via-base-100 to-base-600 bg-opacity-20 flex items-center justify-center rounded-xl">
         {/* Info */}
         <div className="text-center max-w-6xl mx-auto px-6 py-20">
-          <h1 className="text-6xl lg:text-8xl  font-extrabold text-white mb-10 tracking-wide drop-shadow-lg">
+          <h1 className="text-6xl lg:text-8xl  font-extrabold text-base-900 mb-10 tracking-wide drop-shadow-lg">
             Welcome to Book Store
           </h1>
           <div className="flex justify-center mb-10">
@@ -52,7 +52,7 @@ const Hero = () => {
         />
         <img
           src={image2}
-          className="absolute top-32 left-20 w-32 lg:w-48 opacity-60 drop-shadow-xl hidden lg:block transform -rotate-12"
+          className="absolute top-32 left-20 w-32 lg:w-48 opacity-40 drop-shadow-xl hidden lg:block transform -rotate-12"
         />
       </div>
 
@@ -88,7 +88,7 @@ const Hero = () => {
           theme === "dracula" ? "bg-gray-900" : "bg-slate-100"
         } py-20 px-6`}
       >
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-10 max-w-7xl mx-auto">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8 max-w-7xl mx-auto">
           {FeaturedBook.map((book) => (
             <Link
               to={`/featurepage/${book.id}`}
@@ -101,7 +101,7 @@ const Hero = () => {
                   theme === "dracula"
                     ? "bg-gradient-to-br from-gray-800 to-gray-700 border-gray-600"
                     : "bg-gradient-to-br from-white to-gray-50 border-gray-200"
-                } rounded-3xl overflow-hidden shadow-2xl hover:shadow-3xl transition-all duration-500 transform hover:-translate-y-6 hover:rotate-1 group-hover:scale-105 border h-full`}
+                } rounded-3xl overflow-hidden shadow-2xl hover:shadow-3xl transition-all duration-600 transform hover:-translate-y-6 hover:rotate-1 group-hover:scale-105 border h-full`}
               >
                 {/* Image Section with Overlay */}
                 <div className="relative overflow-hidden">

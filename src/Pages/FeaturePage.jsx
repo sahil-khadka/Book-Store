@@ -136,7 +136,7 @@ const FeaturePage = () => {
                 <div className="space-y-8">
                   {/* Price Badge */}
                   <div className="flex justify-between items-start">
-                    <div className="bg-gradient-to-r from-emerald-500 to-teal-500 text-white px-6 py-3 rounded-full text-2xl font-bold shadow-lg">
+                    <div className="bg-gradient-to-r from-orange-500 to-red-500 text-white px-6 py-3 rounded-full text-2xl font-bold shadow-lg">
                       ${priceValue.toFixed(2)}
                     </div>
                     {/* Featured Badge */}
@@ -322,7 +322,7 @@ const FeaturePage = () => {
                   {/* Add to Cart Button */}
                   <button
                     onClick={handleAddToCart}
-                    className="w-full py-4 px-8 rounded-2xl text-xl font-bold transition-all duration-300 transform hover:scale-105 bg-gradient-to-r from-purple-600 via-pink-600 to-red-600 hover:from-purple-700 hover:via-pink-700 hover:to-red-700 text-white shadow-xl hover:shadow-2xl"
+                    className="w-full py-4 px-8 rounded-2xl text-xl font-bold transition-all duration-300 transform hover:scale-105 bg-gradient-to-r from-orange-500 to-red-600 hover:from-orange-600 hover:to-red-700 text-white shadow-xl hover:shadow-2xl"
                   >
                     {isInCart
                       ? `Add ${quantity} More to Cart`

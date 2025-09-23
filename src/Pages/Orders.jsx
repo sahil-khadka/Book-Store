@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { cancelOrder } from "../features/orderSlice";
+import { cancelOrder, cancelOrderItem } from "../features/orderSlice";
 import { addItem } from "../features/cartSlice";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
@@ -57,6 +57,11 @@ const Orders = () => {
       );
     });
     toast.success("Items added to cart!");
+  };
+
+  const handleCancelItem = (orderId, itemId, itemTitle) => {
+    dispatch(cancelOrderItem({ orderId, itemId }));
+    toast.success(`${itemTitle} cancelled and moved to cancelled orders!`);
   };
 
   const filteredOrders = orders.filter((order) => {
@@ -306,16 +311,46 @@ const Orders = () => {
                               </p>
                             </div>
                           </div>
-                          <div className="text-right">
-                            <p
-                              className={`font-medium ${
-                                theme === "dracula"
-                                  ? "text-white"
-                                  : "text-gray-900"
-                              }`}
-                            >
-                              ${item.price.toFixed(2)}
-                            </p>
+                          <div className="flex items-center gap-3">
+                            <div className="text-right">
+                              <p
+                                className={`font-medium ${
+                                  theme === "dracula"
+                                    ? "text-white"
+                                    : "text-gray-900"
+                                }`}
+                              >
+                                ${item.price.toFixed(2)}
+                              </p>
+                            </div>
+                            {(order.status === "processing" ||
+                              order.status === "shipped") && (
+                              <button
+                                onClick={() =>
+                                  handleCancelItem(
+                                    order.id,
+                                    item.id,
+                                    item.title
+                                  )
+                                }
+                                className="bg-gradient-to-r from-orange-500 to-red-600 hover:from-orange-600 hover:to-red-700 text-white p-2 rounded-md transition-all duration-300 transform hover:scale-105"
+                                title="Cancel this item"
+                              >
+                                <svg
+                                  className="w-4 h-4"
+                                  fill="none"
+                                  stroke="currentColor"
+                                  viewBox="0 0 24 24"
+                                >
+                                  <path
+                                    strokeLinecap="round"
+                                    strokeLinejoin="round"
+                                    strokeWidth={2}
+                                    d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"
+                                  />
+                                </svg>
+                              </button>
+                            )}
                           </div>
                         </div>
                       ))}

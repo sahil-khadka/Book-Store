@@ -26,7 +26,7 @@ const About = () => {
   }, []);
 
   const handleExploreBooks = () => {
-    navigate("/products");
+    navigate("/product");
   };
 
   return (
@@ -35,10 +35,10 @@ const About = () => {
         src={AboImg}
         alt="Books background"
         className="fixed top-0 left-0 w-full h-full object-cover -z-10"
-        style={{ opacity: isDarkMode ? 0.05 : 0.3 }}
+        style={{ opacity: isDarkMode ? 0.3 : 0.5 }}
       />
 
-      <div className="min-h-screen bg-gradient-to-b from-transparent via-white/20 to-white/40 dark:from-gray-900/50 dark:via-gray-900/70 dark:to-gray-900/90 py-12 transition-all duration-300">
+      <div className="min-h-screen bg-gradient-to-b from-transparent via-base-700 to-base-200 py-9 transition-all duration-300 rounded-xl">
         <div className="container mx-auto px-6 max-w-6xl">
           {/* Header Section */}
           <div className="text-center mb-16">
@@ -128,10 +128,10 @@ const About = () => {
           {/* Mission Section */}
           <div className="bg-gradient-to-r from-blue-500/20 to-purple-500/20 dark:from-blue-500/30 dark:to-purple-500/30 backdrop-blur-sm rounded-3xl p-12 mb-16 border border-transparent dark:border-gray-700">
             <div className="text-center">
-              <h2 className="text-4xl font-bold text-gray-800  mb-8">
+              <h2 className="text-4xl font-bold text-base-600  mb-8">
                 Our Mission
               </h2>
-              <p className="text-xl leading-relaxed text-gray-700  max-w-4xl mx-auto mb-8 font-medium">
+              <p className="text-xl leading-relaxed text-base-600  max-w-4xl mx-auto mb-8 font-medium">
                 To foster a love of reading by providing access to diverse,
                 high-quality books and creating a welcoming community where
                 stories connect people and ideas flourish.
@@ -165,7 +165,7 @@ const About = () => {
             </p>
             <button
               onClick={handleExploreBooks}
-              className="bg-gradient-to-r from-blue-500 to-purple-600 dark:from-blue-600 dark:to-purple-700 text-white px-8 py-4 rounded-full font-bold text-lg hover:from-blue-600 hover:to-purple-700 dark:hover:from-blue-700 dark:hover:to-purple-800 transform hover:scale-105 transition-all duration-300 shadow-lg cursor-pointer"
+              className="bg-gradient-to-r from-orange-500 to-red-600 hover:from-orange-600 hover:to-red-700 text-white px-8 py-4 rounded-full font-bold text-lg transform hover:scale-105 transition-all duration-300 shadow-lg cursor-pointer"
             >
               Explore Our Books
             </button>

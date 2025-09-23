@@ -162,7 +162,7 @@ const Product = () => {
       <div
         className={`min-h-screen ${
           theme === "dracula" ? "bg-gray-900/80" : "bg-white/80"
-        } backdrop-blur-sm pt-20 pb-10`}
+        } backdrop-blur-sm py-10 rounded-sm`}
       >
         <div className="container mx-auto px-6">
           <div className="mb-10 flex justify-center">
@@ -246,7 +246,7 @@ const Product = () => {
                       className="max-w-full max-h-full object-contain group-hover:scale-105 transition-transform duration-300"
                     />
                     <div className="absolute top-3 right-3">
-                      <span className="bg-gradient-to-r from-green-500 to-blue-500 text-white px-3 py-1 rounded-full text-sm font-bold shadow-lg">
+                      <span className="bg-gradient-to-r from-orange-500 to-red-500 text-white px-3 py-1 rounded-full text-sm font-bold shadow-lg">
                         {price}
                       </span>
                     </div>
@@ -323,7 +323,7 @@ const Product = () => {
                       </Link>
                       <button
                         onClick={() => handleAddToCart(book)}
-                        className="w-full bg-gradient-to-r from-green-500 to-teal-500 hover:from-green-600 hover:to-teal-600 text-white py-2.5 px-4 rounded-lg font-semibold transition-all duration-300 transform hover:scale-105 cursor-pointer"
+                        className="w-full bg-gradient-to-r from-orange-500 to-red-600 hover:from-orange-600 hover:to-red-700 text-white py-2.5 px-4 rounded-lg font-semibold transition-all duration-300 transform hover:scale-105 cursor-pointer"
                       >
                         Add to Cart
                       </button>
