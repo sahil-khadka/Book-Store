@@ -105,7 +105,13 @@ const Product = () => {
     const priceAmount =
       book.saleInfo?.retailPrice?.amount ||
       parseFloat(generateFixedPrice(book.id));
-    dispatch(addItem({ ...book, calculatedPrice: priceAmount }));
+    dispatch(
+      addItem({
+        ...book,
+        calculatedPrice: Math.abs(priceAmount),
+        quantity: 1,
+      })
+    );
     toast.success("Book added to cart!", {
       position: "top-right",
       autoClose: 2000,

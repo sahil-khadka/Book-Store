@@ -18,22 +18,22 @@ const Hero = () => {
         className="w-full blur-sm h-screen object-cover fixed top-0 left-0 -z-20"
         style={{ opacity: 0.6 }}
       />
-      <div className="relative min-h-screen bg-gray-600 bg-opacity-20 flex items-center justify-center">
+      <div className="relative min-h-screen bg-base-300 bg-opacity-20 flex items-center justify-center rounded-xl">
         {/* Info */}
         <div className="text-center max-w-6xl mx-auto px-6 py-20">
           <h1 className="text-6xl lg:text-8xl  font-extrabold text-white mb-10 tracking-wide drop-shadow-lg">
             Welcome to Book Store
           </h1>
           <div className="flex justify-center mb-10">
-            <hr className="w-40 border-t-8 border-orange-400 rounded-full shadow-lg" />
+            <hr className="w-60 border-t-8 border-orange-400 rounded-full shadow-lg" />
           </div>
-          <p className="text-2xl lg:text-3xl text-gray-100 mb-8 leading-relaxed font-light max-w-5xl mx-auto">
+          <p className="text-2xl lg:text-3xl text-base-600 mb-8 leading-relaxed font-light max-w-5xl mx-auto">
             Discover your next favorite read! At Book Haven, we bring you a
             world of books at your fingertips. Browse our collection, find
             bestsellers, explore new releases, or dive into timeless classics —
             all in one place.
           </p>
-          <p className="text-3xl lg:text-4xl text-orange-300 font-bold mb-16 drop-shadow-md">
+          <p className="text-3xl lg:text-4xl text-orange-500 font-bold mb-16 drop-shadow-md">
             ✨ Start your reading journey today and let your imagination take
             flight!
           </p>

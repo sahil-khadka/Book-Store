@@ -58,7 +58,7 @@ const Navbar = () => {
                   : "text-blue-600 hover:text-blue-700"
               } transition-colors duration-200`}
             >
-              BS
+              <img src="/BS.jpg" alt="Book Store" className="h-25" />
             </NavLink>
             <button
               onClick={() => setIsOpen(!isOpen)}
