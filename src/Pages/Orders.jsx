@@ -75,8 +75,8 @@ const Orders = () => {
         <img
           src={"https://kirtibook.in/static/media/books.f6da5e8d.jpg"}
           alt="Books background"
-          className="fixed top-0 left-0 object-cover -z-10 min-h-screen w-full"
-          style={{ opacity: 0.7 }}
+          className="fixed top-0 blur-sm left-0 object-cover -z-10 min-h-screen w-full"
+          style={{ opacity: 0.6 }}
         />
         <div
           className={`min-h-screen ${
@@ -105,13 +105,13 @@ const Orders = () => {
       <img
         src={"https://kirtibook.in/static/media/books.f6da5e8d.jpg"}
         alt="Books background"
-        className="fixed top-0 left-0 object-cover -z-10 min-h-screen w-full"
-        style={{ opacity: 0.7 }}
+        className="fixed top-0 blur-sm left-0 object-cover -z-10 min-h-screen w-full"
+        style={{ opacity: 0.6 }}
       />
       <div
         className={`min-h-screen ${
           theme === "dracula" ? "bg-gray-900/70" : "bg-white/70"
-        } backdrop-blur-sm pt-20 pb-16`}
+        } backdrop-blur-sm pt-20 pb-16 rounded-xl`}
       >
         <div className="container mx-auto px-4 py-8">
           <div className="mb-8">

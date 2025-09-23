@@ -156,13 +156,13 @@ const Product = () => {
       <img
         src={pro}
         alt="Books background"
-        className="fixed inset-0 w-full h-full object-cover -z-10"
-        style={{ opacity: 0.7 }}
+        className="fixed inset-0  blur-sm w-full h-full object-cover -z-10"
+        style={{ opacity: 0.6 }}
       />
       <div
         className={`min-h-screen ${
           theme === "dracula" ? "bg-gray-900/80" : "bg-white/80"
-        } backdrop-blur-sm py-10 rounded-sm`}
+        } backdrop-blur-sm py-10 rounded-xl`}
       >
         <div className="container mx-auto px-6">
           <div className="mb-10 flex justify-center">
@@ -200,7 +200,7 @@ const Product = () => {
               </div>
               <button
                 onClick={handleSearchSubmit}
-                className="absolute right-2 top-1/2 transform -translate-y-1/2 bg-gradient-to-r from-blue-500 to-purple-600 text-white px-6 py-2 rounded-full hover:from-blue-600 hover:to-purple-700 transition-all duration-300 font-semibold cursor-pointer"
+                className="absolute right-2 top-1/2 transform -translate-y-1/2 bg-gradient-to-r from-orange-500 to-red-500 text-white px-6 py-2 rounded-full hover:from-orange-400 hover:to-red-400 transition-all duration-300 font-semibold cursor-pointer"
               >
                 Search
               </button>

@@ -143,7 +143,7 @@ const Login = () => {
                 <button
                   type="button"
                   onClick={() => setShowPassword(!showPassword)}
-                  className="absolute inset-y-0 right-0 pr-3 flex items-center text-sm font-medium text-blue-600 hover:text-blue-800 transition-colors duration-200"
+                  className="absolute inset-y-0 right-0 pr-3 flex items-center text-sm font-medium text-orange-600 hover:text-orange-800 transition-colors duration-200 cursor-pointer"
                 >
                   {showPassword ? "Hide" : "Show"}
                 </button>
@@ -153,7 +153,7 @@ const Login = () => {
             {/* Submit Button */}
             <button
               type="submit"
-              className="w-full bg-gradient-to-r from-blue-600 to-indigo-600 text-white font-bold py-3 px-4 rounded-xl hover:from-blue-700 hover:to-indigo-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transform hover:scale-105 transition-all duration-200 shadow-lg"
+              className="w-full bg-gradient-to-r from-orange-500 to-red-600 hover:from-orange-600 hover:to-red-700 text-white font-bold py-3 px-4 rounded-xl focus:outline-none focus:ring-2 focus:ring-orange-500 focus:ring-offset-2 transform hover:scale-105 transition-all duration-200 shadow-lg cursor-pointer"
             >
               Sign In
             </button>
@@ -162,7 +162,7 @@ const Login = () => {
             <button
               type="button"
               onClick={handleGuestLogin}
-              className="w-full bg-gradient-to-r from-gray-500 to-gray-600 text-white font-bold py-3 px-4 rounded-xl hover:from-gray-600 hover:to-gray-700 focus:outline-none focus:ring-2 focus:ring-gray-500 focus:ring-offset-2 transform hover:scale-105 transition-all duration-200 shadow-lg"
+              className="w-full bg-gradient-to-r from-orange-500 to-red-600 hover:from-orange-600 hover:to-red-700 text-white font-bold py-3 px-4 rounded-xl focus:outline-none focus:ring-2 focus:ring-orange-500 focus:ring-offset-2 transform hover:scale-105 transition-all duration-200 shadow-lg cursor-pointer"
             >
               Continue as Guest
             </button>
@@ -173,7 +173,7 @@ const Login = () => {
                 Don't have an account?{" "}
                 <Link
                   to="/register"
-                  className="font-semibold text-blue-600 hover:text-blue-800 transition-colors duration-200"
+                  className="font-semibold text-orange-600 hover:text-orange-800 transition-colors duration-200"
                 >
                   Create Account
                 </Link>

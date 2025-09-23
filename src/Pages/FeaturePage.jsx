@@ -94,13 +94,13 @@ const FeaturePage = () => {
       <img
         src={pro}
         alt="Books background"
-        className="fixed inset-0 w-full h-full object-cover -z-10"
-        style={{ opacity: 0.5 }}
+        className="fixed inset-0 blur-sm w-full h-full object-cover -z-10"
+        style={{ opacity: 0.6 }}
       />
       <div
         className={`min-h-screen ${
           theme === "dracula" ? "bg-gray-900/70" : "bg-white/70"
-        } backdrop-blur-sm pt-24 pb-16`}
+        } backdrop-blur-sm pt-24 pb-16 rounded-xl`}
       >
         <div className="container mx-auto px-6 max-w-7xl">
           {/* Hero Section */}

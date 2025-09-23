@@ -107,8 +107,8 @@ const SingleProduct = () => {
       <img
         src={pro}
         alt="Books background"
-        className="fixed inset-0 w-full h-full object-cover -z-10"
-        style={{ opacity: 0.5 }}
+        className="fixed blur-sm inset-0 w-full h-full object-cover -z-10"
+        style={{ opacity: 0.6 }}
       />
       <div
         className={`min-h-screen ${

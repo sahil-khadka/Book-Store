@@ -40,7 +40,7 @@ const Hero = () => {
           <div>
             <Link
               to="/product"
-              className="inline-block bg-gradient-to-r from-orange-500 to-red-600 hover:from-orange-600 hover:to-red-700 text-white font-bold py-6 px-12 rounded-full text-2xl transition-all duration-300 transform hover:scale-110 shadow-2xl uppercase tracking-wider"
+              className="inline-block bg-gradient-to-r from-orange-500 to-red-600 hover:from-orange-600 hover:to-red-700 text-white font-bold py-6 px-12 rounded-full text-2xl transition-all duration-300 transform hover:scale-110 shadow-2xl uppercase tracking-wider cursor-pointer"
             >
               Our Products
             </Link>

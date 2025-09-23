@@ -34,13 +34,13 @@ const Header = () => {
           <div className="flex gap-4 justify-center items-center">
             <Link
               to="/login"
-              className="text-white font-medium text-xs bg-blue-600 hover:bg-blue-700 px-4 py-2 rounded no-underline transition-colors duration-200"
+              className="text-white font-medium text-xs bg-blue-600 hover:bg-blue-700 px-4 py-2 rounded no-underline transition-colors duration-200 cursor-pointer"
             >
               SignIn/Guest User
             </Link>
             <Link
               to="/Register"
-              className="text-white font-medium text-xs bg-green-600 hover:bg-green-700 px-4 py-2 rounded no-underline transition-colors duration-200"
+              className="text-white font-medium text-xs bg-green-600 hover:bg-green-700 px-4 py-2 rounded no-underline transition-colors duration-200 cursor-pointer"
             >
               Create Account
             </Link>
@@ -84,7 +84,7 @@ const Header = () => {
               Hello, {user.username}
             </p>
             <button
-              className="text-xs font-semibold border border-red-500 text-red-500 bg-white px-3 py-1 rounded hover:bg-red-500 hover:text-white transition-colors duration-200"
+              className="text-xs font-semibold border border-red-500 text-red-500 bg-white px-3 py-1 rounded hover:bg-red-500 hover:text-white transition-colors duration-200 cursor-pointer"
               onClick={handleLogout}
             >
               Logout

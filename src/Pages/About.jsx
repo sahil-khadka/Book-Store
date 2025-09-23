@@ -34,8 +34,8 @@ const About = () => {
       <img
         src={AboImg}
         alt="Books background"
-        className="fixed top-0 left-0 w-full h-full object-cover -z-10"
-        style={{ opacity: isDarkMode ? 0.3 : 0.5 }}
+        className="fixed blur-sm top-0 left-0 w-full h-full object-cover -z-10"
+        style={{ opacity: isDarkMode ? 0.6 : 0.6 }}
       />
 
       <div className="min-h-screen bg-gradient-to-b from-transparent via-base-700 to-base-200 py-9 transition-all duration-300 rounded-xl">

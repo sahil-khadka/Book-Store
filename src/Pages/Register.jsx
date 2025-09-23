@@ -148,7 +148,7 @@ const Register = () => {
                 <button
                   type="button"
                   onClick={() => setShowPassword(!showPassword)}
-                  className="absolute inset-y-0 right-0 pr-3 flex items-center text-sm font-medium text-purple-600 hover:text-purple-800 transition-colors duration-200"
+                  className="absolute inset-y-0 right-0 pr-3 flex items-center text-sm font-medium text-orange-600 hover:text-orange-800 transition-colors duration-200 cursor-pointer"
                 >
                   {showPassword ? "Hide" : "Show"}
                 </button>
@@ -158,7 +158,7 @@ const Register = () => {
             {/* Submit Button */}
             <button
               type="submit"
-              className="w-full bg-gradient-to-r from-purple-600 to-pink-600 text-white font-bold py-3 px-4 rounded-xl hover:from-purple-700 hover:to-pink-700 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:ring-offset-2 transform hover:scale-105 transition-all duration-200 shadow-lg"
+              className="w-full bg-gradient-to-r from-orange-500 to-red-600 hover:from-orange-600 hover:to-red-700 text-white font-bold py-3 px-4 rounded-xl focus:outline-none focus:ring-2 focus:ring-orange-500 focus:ring-offset-2 transform hover:scale-105 transition-all duration-200 shadow-lg cursor-pointer"
             >
               Create Account
             </button>
@@ -169,7 +169,7 @@ const Register = () => {
                 Already have an account?{" "}
                 <Link
                   to="/login"
-                  className="font-semibold text-purple-600 hover:text-purple-800 transition-colors duration-200"
+                  className="font-semibold text-orange-600 hover:text-orange-800 transition-colors duration-200"
                 >
                   Sign In
                 </Link>
