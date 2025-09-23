@@ -1,7 +1,7 @@
 import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
-  items: JSON.parse(localStorage.getItem("cart")) || [],
+  items: [],
 };
 
 const cartSlice = createSlice({
@@ -13,30 +13,28 @@ const cartSlice = createSlice({
       const existingItem = state.items.find((item) => item.id === newItem.id);
 
       if (existingItem) {
-        // If item exists, add the new quantity to existing quantity
-        existingItem.quantity += newItem.quantity;
+        // If item exists, increase quantity
+        existingItem.quantity += 1;
       } else {
-        // If new item, add it with the specified quantity
-        state.items.push(newItem);
+        // If new item, add with quantity 1
+        state.items.push({
+          ...newItem,
+          quantity: 1, // Make sure quantity is always set
+        });
       }
     },
     removeItem: (state, action) => {
       state.items = state.items.filter((item) => item.id !== action.payload);
-      localStorage.setItem("cart", JSON.stringify(state.items));
     },
     updateQuantity: (state, action) => {
       const { id, quantity } = action.payload;
       const item = state.items.find((item) => item.id === id);
-      if (item && quantity > 0) {
+      if (item) {
         item.quantity = quantity;
-      } else if (item && quantity <= 0) {
-        state.items = state.items.filter((item) => item.id !== id);
       }
-      localStorage.setItem("cart", JSON.stringify(state.items));
     },
     clearCart: (state) => {
       state.items = [];
-      localStorage.setItem("cart", JSON.stringify([]));
     },
   },
 });

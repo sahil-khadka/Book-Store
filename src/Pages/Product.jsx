@@ -226,14 +226,11 @@ const Product = () => {
                 parseFloat(generateFixedPrice(book.id));
               const price = `$${Math.abs(priceAmount)}`;
               return (
-                <Link
-                  to={`/singleproduct/${book.id}`}
-                  state={{ book, currentPage, query }}
+                <div
                   key={book.id}
-                  className={`block ${
+                  className={`${
                     theme === "dracula" ? "bg-gray-800" : "bg-white"
-                  } rounded-2xl shadow-xl hover:shadow-2xl transform hover:-translate-y-2 transition-all duration-300 overflow-hidden group border border-gray-200 cursor-pointer`}
-                  style={{ textDecoration: "none" }}
+                  } rounded-2xl shadow-xl hover:shadow-2xl transform hover:-translate-y-2 transition-all duration-300 overflow-hidden group border border-gray-200`}
                 >
                   {/* Image Section */}
                   <div className="relative h-64 bg-gray-100 flex items-center justify-center overflow-hidden">
@@ -310,22 +307,23 @@ const Product = () => {
 
                     {/* Action Buttons */}
                     <div className="space-y-3 pt-4">
-                      <div className="block w-full text-center bg-gradient-to-r from-blue-500 to-purple-600 hover:from-blue-600 hover:to-purple-700 text-white py-2.5 px-4 rounded-lg font-semibold transition-all duration-300 transform hover:scale-105 cursor-pointer">
+                      <Link
+                        to={`/singleproduct/${book.id}`}
+                        state={{ book, currentPage, query }}
+                        className="block w-full text-center bg-gradient-to-r from-blue-500 to-purple-600 hover:from-blue-600 hover:to-purple-700 text-white py-2.5 px-4 rounded-lg font-semibold transition-all duration-300 transform hover:scale-105 cursor-pointer"
+                        style={{ textDecoration: "none" }}
+                      >
                         View Details
-                      </div>
+                      </Link>
                       <button
-                        onClick={(e) => {
-                          e.preventDefault();
-                          e.stopPropagation();
-                          handleAddToCart(book);
-                        }}
+                        onClick={() => handleAddToCart(book)}
                         className="w-full bg-gradient-to-r from-green-500 to-teal-500 hover:from-green-600 hover:to-teal-600 text-white py-2.5 px-4 rounded-lg font-semibold transition-all duration-300 transform hover:scale-105 cursor-pointer"
                       >
                         Add to Cart
                       </button>
                     </div>
                   </div>
-                </Link>
+                </div>
               );
             })}
           </div>

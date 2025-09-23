@@ -87,10 +87,23 @@ const router = createBrowserRouter([
 
 const App = () => {
   return (
-    <>
-      <ToastContainer />
+    <div className="App">
       <RouterProvider router={router} />
-    </>
+
+      {/* Global ToastContainer - Available on all pages */}
+      <ToastContainer
+        position="top-right"
+        autoClose={3000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+        className="z-50"
+      />
+    </div>
   );
 };
 

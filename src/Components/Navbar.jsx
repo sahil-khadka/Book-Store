@@ -58,7 +58,7 @@ const Navbar = () => {
                   : "text-blue-600 hover:text-blue-700"
               } transition-colors duration-200`}
             >
-              BK
+              BS
             </NavLink>
             <button
               onClick={() => setIsOpen(!isOpen)}
