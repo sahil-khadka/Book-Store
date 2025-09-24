@@ -236,14 +236,14 @@ const Product = () => {
                   key={book.id}
                   className={`${
                     theme === "dracula" ? "bg-gray-800" : "bg-white"
-                  } rounded-2xl shadow-xl hover:shadow-2xl transform hover:-translate-y-2 transition-all duration-300 overflow-hidden group border border-gray-200`}
+                  } rounded-2xl shadow-xl hover:shadow-2xl transform hover:-translate-y-2 transition-all duration-300 overflow-hidden group border border-gray-200 h-[600px] flex flex-col`}
                 >
                   {/* Image Section */}
-                  <div className="relative h-64 bg-gray-100 flex items-center justify-center overflow-hidden">
+                  <div className="relative h-64 bg-gray-100 flex items-center justify-center overflow-hidden shrink-0">
                     <img
                       src={info.imageLinks?.thumbnail || notimg}
                       alt={info.title}
-                      className="max-w-full max-h-full object-contain group-hover:scale-105 transition-transform duration-300"
+                      className="w-full h-full object-contain group-hover:scale-105 transition-transform duration-300"
                     />
                     <div className="absolute top-3 right-3">
                       <span className="bg-gradient-to-r from-orange-500 to-red-500 text-white px-3 py-1 rounded-full text-sm font-bold shadow-lg">
@@ -253,77 +253,91 @@ const Product = () => {
                   </div>
 
                   {/* Content Section */}
-                  <div className="p-6 space-y-4">
-                    <h2
-                      className={`text-lg font-bold leading-tight ${
-                        theme === "dracula" ? "text-white" : "text-gray-900"
-                      } line-clamp-2 min-h-[3.5rem]`}
-                    >
-                      {info.title}
-                    </h2>
+                  <div className="p-6 flex flex-col flex-grow">
+                    <div className="flex-grow space-y-4">
+                      <h2
+                        className={`text-lg font-bold leading-tight ${
+                          theme === "dracula" ? "text-white" : "text-gray-900"
+                        } h-14 overflow-hidden`}
+                        title={info.title}
+                      >
+                        {info.title && info.title.length > 40
+                          ? `${info.title.substring(0, 40)}...`
+                          : info.title}
+                      </h2>
 
-                    <p
-                      className={`text-sm ${
-                        theme === "dracula" ? "text-gray-300" : "text-gray-600"
-                      } font-medium`}
-                    >
-                      by {info.authors?.join(", ") || "Unknown Author"}
-                    </p>
+                      <p
+                        className={`text-sm ${
+                          theme === "dracula"
+                            ? "text-gray-300"
+                            : "text-gray-600"
+                        } font-medium h-10 overflow-hidden`}
+                        style={{
+                          display: "-webkit-box",
+                          WebkitLineClamp: 2,
+                          WebkitBoxOrient: "vertical",
+                        }}
+                      >
+                        by {info.authors?.join(", ") || "Unknown Author"}
+                      </p>
 
-                    {info.averageRating && (
-                      <div className="flex items-center gap-2">
-                        <div className="flex">
-                          {Array.from({ length: 5 }, (_, i) => (
+                      <div className="h-6">
+                        {info.averageRating && (
+                          <div className="flex items-center gap-2">
+                            <div className="flex">
+                              {Array.from({ length: 5 }, (_, i) => (
+                                <span
+                                  key={i}
+                                  className={`text-lg ${
+                                    i < Math.floor(info.averageRating)
+                                      ? "text-yellow-400"
+                                      : theme === "dracula"
+                                      ? "text-gray-600"
+                                      : "text-gray-300"
+                                  }`}
+                                >
+                                  ★
+                                </span>
+                              ))}
+                            </div>
                             <span
-                              key={i}
-                              className={`text-lg ${
-                                i < Math.floor(info.averageRating)
-                                  ? "text-yellow-400"
-                                  : theme === "dracula"
-                                  ? "text-gray-600"
-                                  : "text-gray-300"
+                              className={`text-sm font-semibold ${
+                                theme === "dracula"
+                                  ? "text-gray-300"
+                                  : "text-gray-600"
                               }`}
                             >
-                              ★
+                              {info.averageRating}/5
                             </span>
-                          ))}
-                        </div>
-                        <span
-                          className={`text-sm font-semibold ${
-                            theme === "dracula"
-                              ? "text-gray-300"
-                              : "text-gray-600"
-                          }`}
-                        >
-                          {info.averageRating}/5
-                        </span>
-                        {info.ratingsCount && (
-                          <span
-                            className={`text-xs ${
-                              theme === "dracula"
-                                ? "text-gray-400"
-                                : "text-gray-500"
-                            }`}
-                          >
-                            ({info.ratingsCount})
-                          </span>
+                            {info.ratingsCount && (
+                              <span
+                                className={`text-xs ${
+                                  theme === "dracula"
+                                    ? "text-gray-400"
+                                    : "text-gray-500"
+                                }`}
+                              >
+                                ({info.ratingsCount})
+                              </span>
+                            )}
+                          </div>
                         )}
                       </div>
-                    )}
+                    </div>
 
-                    {/* Action Buttons */}
-                    <div className="space-y-3 pt-4">
+                    {/* Action Buttons - Always at bottom */}
+                    <div className="space-y-3 pt-6 mt-auto">
                       <Link
                         to={`/singleproduct/${book.id}`}
                         state={{ book, currentPage, query }}
-                        className="block w-full text-center bg-gradient-to-r from-blue-500 to-purple-600 hover:from-blue-600 hover:to-purple-700 text-white py-2.5 px-4 rounded-lg font-semibold transition-all duration-300 transform hover:scale-105 cursor-pointer"
+                        className="block w-full text-center bg-gradient-to-r from-blue-500 to-purple-600 hover:from-blue-600 hover:to-purple-700 text-white py-2.5 px-4 rounded-lg font-semibold transition-all duration-300 transform hover:scale-105 cursor-pointer h-11"
                         style={{ textDecoration: "none" }}
                       >
                         View Details
                       </Link>
                       <button
                         onClick={() => handleAddToCart(book)}
-                        className="w-full bg-gradient-to-r from-orange-500 to-red-600 hover:from-orange-600 hover:to-red-700 text-white py-2.5 px-4 rounded-lg font-semibold transition-all duration-300 transform hover:scale-105 cursor-pointer"
+                        className="w-full bg-gradient-to-r from-orange-500 to-red-600 hover:from-orange-600 hover:to-red-700 text-white py-2.5 px-4 rounded-lg font-semibold transition-all duration-300 transform hover:scale-105 cursor-pointer h-11"
                       >
                         Add to Cart
                       </button>

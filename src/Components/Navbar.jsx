@@ -1,10 +1,12 @@
-import { NavLink } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 import { FaBarsStaggered } from "react-icons/fa6";
 import { useState, useRef, useEffect } from "react";
 import { BsCart4, BsMoonFill, BsSunFill } from "react-icons/bs";
 import NavLinks from "./NavLinks";
 import { useSelector, useDispatch } from "react-redux";
 import { toggleTheme } from "../features/userSlice";
+
+import Header from "./Header";
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -13,10 +15,11 @@ const Navbar = () => {
     state.cart.items.reduce((sum, item) => sum + item.quantity, 0)
   );
   const theme = useSelector((state) => state.userState.theme);
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
+  const user = useSelector((state) => state.userState.user);
 
   // Theme toggle
-  const dispatch = useDispatch();
-
   const handleTheme = () => {
     dispatch(toggleTheme());
   };
@@ -96,7 +99,7 @@ const Navbar = () => {
             </ul>
           </div>
 
-          {/* Right side - Theme toggle and cart */}
+          {/* Right side - Theme toggle, auth buttons, and cart */}
           <div className="flex items-center space-x-4">
             {/* Theme toggle */}
             <div className="relative">
@@ -145,6 +148,10 @@ const Navbar = () => {
                 )}
               </div>
             </NavLink>
+            {/* Login and register buttons */}
+            <div className="ml-8">
+              <Header />
+            </div>
           </div>
         </div>
       </div>

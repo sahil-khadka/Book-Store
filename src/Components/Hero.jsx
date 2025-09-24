@@ -48,11 +48,11 @@ const Hero = () => {
         </div>
         <img
           src={image1}
-          className="absolute bottom-10 right-20 w-60 lg:w-80 opacity-100 drop-shadow-2xl hidden lg:block transform rotate-12"
+          className="absolute bottom-10 right-20 w-60 lg:w-80 opacity-100 drop-shadow-2xl drop-shadow-gray-300 hidden lg:block transform rotate-12"
         />
         <img
           src={image2}
-          className="absolute top-32 left-20 w-32 lg:w-48 opacity-40 drop-shadow-xl hidden lg:block transform -rotate-12"
+          className="absolute top-32 left-20 w-32 lg:w-48 opacity-25  hidden lg:block transform -rotate-12"
         />
       </div>
 

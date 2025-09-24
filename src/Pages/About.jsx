@@ -2,6 +2,7 @@ import { useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 import bookstoreimg from "../assets/bookstoreimg.jpg";
 import AboImg from "../assets/FORabout.png";
+import ABC from "../assets/234.jpg";
 
 const About = () => {
   const navigate = useNavigate();

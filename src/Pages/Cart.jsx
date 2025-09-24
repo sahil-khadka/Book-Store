@@ -124,8 +124,8 @@ const Cart = () => {
 
   if (cartItems.length === 0) {
     return (
-      <div className="min-h-screen bg-gradient-to-br from-purple-50 to-blue-50 dark:from-gray-900 dark:to-purple-900 flex items-center justify-center p-4">
-        <div className="text-center bg-white dark:bg-gray-800 rounded-2xl shadow-xl p-12 max-w-md">
+      <div className="h-190 bg-gradient-to-br from-base-300 to-base-00 dark:from-gray-900 dark:to-purple-900 flex items-center justify-center relative ">
+        <div className="text-center bg-neutral-300 dark:bg-gray-800 rounded-2xl shadow-xl p-12 max-w-md absolute top-50 ">
           <div className="w-24 h-24 mx-auto mb-6 bg-gradient-to-r from-purple-500 to-pink-500 rounded-full flex items-center justify-center">
             <svg
               className="w-12 h-12 text-white"

@@ -4,7 +4,7 @@ import Footer from "../Components/Footer";
 const HomeLayout = () => {
   return (
     <>
-      <Header />
+      {/* <Header /> */}
       <Navbar />
       <section className="align-element py-20">
         <Outlet />
