@@ -236,7 +236,7 @@ const Product = () => {
                   key={book.id}
                   className={`${
                     theme === "dracula" ? "bg-gray-800" : "bg-white"
-                  } rounded-2xl shadow-xl hover:shadow-2xl transform hover:-translate-y-2 transition-all duration-300 overflow-hidden group border border-gray-200 h-[600px] flex flex-col`}
+                  } rounded-3xl shadow-xl hover:shadow-2xl transform hover:-translate-y-2 transition-all duration-300 overflow-hidden group border border-gray-200 h-[600px] flex flex-col`}
                 >
                   {/* Image Section */}
                   <div className="relative h-64 bg-gray-100 flex items-center justify-center overflow-hidden shrink-0">
@@ -246,7 +246,7 @@ const Product = () => {
                       className="w-full h-full object-contain group-hover:scale-105 transition-transform duration-300"
                     />
                     <div className="absolute top-3 right-3">
-                      <span className="bg-gradient-to-r from-orange-500 to-red-500 text-white px-3 py-1 rounded-full text-sm font-bold shadow-lg">
+                      <span className="bg-gradient-to-r from-orange-500 to-red-500 text-white px-3 py-2 rounded-3xl text-sm font-bold shadow-lg">
                         {price}
                       </span>
                     </div>
@@ -326,7 +326,7 @@ const Product = () => {
                     </div>
 
                     {/* Action Buttons - Always at bottom */}
-                    <div className="space-y-3 pt-6 mt-auto">
+                    <div className="space-y-3 mt-auto ">
                       <Link
                         to={`/singleproduct/${book.id}`}
                         state={{ book, currentPage, query }}

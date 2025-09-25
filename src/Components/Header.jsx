@@ -33,13 +33,13 @@ const Header = () => {
           <div className="flex gap-2">
             <Link
               to="/login"
-              className="text-white text-sm font-medium bg-gradient-to-r from-orange-500 to-red-600 px-3 py-1.5 rounded transition-all duration-200"
+              className="text-white text-sm font-medium bg-gradient-to-r from-orange-500 to-red-600 hover:from-orange-300 hover:to-red-700 hover:scale-105 px-3 py-1.5 rounded transition-all duration-200"
             >
-              SignIn
+              Sign In
             </Link>
             <Link
               to="/Register"
-              className="text-white text-sm font-medium bg-gradient-to-r from-orange-500 to-red-600 px-3 py-1.5 rounded transition-all duration-200"
+              className="text-white text-sm font-medium bg-gradient-to-r from-orange-500 to-red-600 hover:from-orange-300 hover:to-red-700 hover:scale-105 px-3 py-1.5 rounded transition-all duration-200"
             >
               Register
             </Link>

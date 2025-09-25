@@ -136,7 +136,7 @@ const FeaturePage = () => {
                 <div className="space-y-8">
                   {/* Price Badge */}
                   <div className="flex justify-between items-start">
-                    <div className="bg-gradient-to-r from-orange-500 to-red-500 text-white px-6 py-3 rounded-full text-2xl font-bold shadow-lg">
+                    <div className="bg-gradient-to-r from-orange-500 to-red-500 text-white px-6 py-3 rounded-3xl text-2xl font-bold shadow-lg">
                       ${priceValue.toFixed(2)}
                     </div>
                     {/* Featured Badge */}

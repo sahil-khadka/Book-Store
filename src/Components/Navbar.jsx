@@ -149,7 +149,7 @@ const Navbar = () => {
               </div>
             </NavLink>
             {/* Login and register buttons */}
-            <div className="ml-8">
+            <div className="ml-3">
               <Header />
             </div>
           </div>
