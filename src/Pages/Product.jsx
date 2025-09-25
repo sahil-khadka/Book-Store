@@ -230,7 +230,7 @@ const Product = () => {
               const priceAmount =
                 book.saleInfo?.retailPrice?.amount ||
                 parseFloat(generateFixedPrice(book.id));
-              const price = `$${Math.abs(priceAmount)}`;
+              const price = `$ ${Math.abs(priceAmount)}`;
               return (
                 <div
                   key={book.id}

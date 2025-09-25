@@ -135,7 +135,7 @@ const Hero = () => {
           <div
             className={`${
               theme === "dracula" ? "bg-gray-900" : "bg-slate-100"
-            } py-20 px-6`}
+            } py-2 px-6`}
           >
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8 max-w-7xl mx-auto">
               {FeaturedBook.map((book) => (
@@ -163,11 +163,6 @@ const Hero = () => {
                       <div className="absolute inset-0 bg-gradient-to-t from-black/30 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
 
                       {/* Price Badge */}
-                      <div className="absolute bottom-4 left-4">
-                        <div className="bg-gradient-to-r from-orange-500 to-red-500 text-white px-2 py-1 rounded-xl font-bold text-lg shadow-lg transform group-hover:scale-110 transition-transform duration-300">
-                          {book.price}
-                        </div>
-                      </div>
 
                       {/* Decorative Corner */}
                       <div className="absolute top-0 left-0 w-0 h-0 border-l-[40px] border-l-transparent border-t-[40px] border-t-orange-400 opacity-60"></div>
@@ -200,6 +195,11 @@ const Hero = () => {
                         </p>
                       </div>
 
+                      <div className="">
+                        <div className=" text-red-500 px-2 py-1 rounded-xl font-bold text-lg shadow-lg  group-hover:scale-110 transition-transform ">
+                          {book.price}
+                        </div>
+                      </div>
                       {/* Bottom Action Area */}
                       <div className="flex items-center justify-center w-full gap-2 mt-4">
                         <span
