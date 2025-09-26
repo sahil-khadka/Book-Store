@@ -284,12 +284,19 @@ const Product = () => {
                               : "text-slate-600"
                           }`}
                         >
-                          by {info.authors?.join(", ") || "Unknown Author"}
+                          by{" "}
+                          {(() => {
+                            const authors =
+                              info.authors?.join(", ") || "Unknown Author";
+                            return authors.length > 50
+                              ? `${authors.substring(0, 50)}...`
+                              : authors;
+                          })()}
                         </p>
                       </li>
                     </div>
                     {/* Rating */}
-                    <div className="h-6 mb-2">
+                    <div className="h-4 mb-1">
                       {info.averageRating && (
                         <div className="flex items-center gap-2 justify-center">
                           <div className="flex">
